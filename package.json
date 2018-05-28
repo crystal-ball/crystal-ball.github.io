@@ -15,13 +15,14 @@
   ],
   "license": "ISC",
   "scripts": {
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "echo \"No tests specified\" && exit 0",
+    "format": "prettier --write \"*.{js,json,md}\" \"**/*.{js,json,md}\""
   },
   "devDependencies": {
-    "commitizen": "^2.9.6",
+    "commitizen": "^2.10.1",
     "cz-customizable": "^5.2.0",
-    "eslint-config-eloquence": "^7.3.0",
-    "prettier": "^1.12.1"
+    "eslint-config-eloquence": "^7.4.0",
+    "prettier": "^1.13.0"
   },
   "config": {
     "commitizen": {
