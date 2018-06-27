@@ -15,14 +15,16 @@
   ],
   "license": "ISC",
   "scripts": {
-    "test": "echo \"No tests specified\" && exit 0",
+    "commit": "git cz",
+    "test": "npm run lint",
+    "lint": "eslint *.js",
     "format": "prettier --write \"*.{js,json,md}\" \"**/*.{js,json,md}\""
   },
   "devDependencies": {
     "commitizen": "^2.10.1",
     "cz-customizable": "^5.2.0",
-    "eslint-config-eloquence": "^7.4.0",
-    "prettier": "^1.13.0"
+    "eslint-config-eloquence": "^8.0.0",
+    "prettier": "^1.13.6"
   },
   "config": {
     "commitizen": {
