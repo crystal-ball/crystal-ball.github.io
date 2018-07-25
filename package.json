@@ -6,16 +6,14 @@
     "type": "git",
     "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
   },
-  "keywords": [
-    "crystal-ball",
-    "awesomeness"
-  ],
+  "keywords": ["crystal-ball", "awesomeness"],
   "contributors": [
     "Dan Hedgecock <hedgecock.d@gmail.com> (https://danhedgecock.com)"
   ],
   "license": "ISC",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
+    "labels": "node ./scripts/github-labels.js",
     "format": "prettier --write \"*.{js,json,md}\" \"**/*.{js,json,md}\""
   },
   "devDependencies": {
@@ -28,5 +26,9 @@
     "commitizen": {
       "path": "node_modules/cz-customizable"
     }
+  },
+  "dependencies": {
+    "inquirer": "^5.2.0",
+    "node-fetch": "^2.1.2"
   }
 }
