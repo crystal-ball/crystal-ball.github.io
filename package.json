@@ -2,29 +2,34 @@
   "name": "crystal-ball.github.io",
   "version": "1.0.0",
   "description": "Organization shared resources and documentation",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
-  },
+  "contributors": [
+    "Dan Hedgecock <hedgecock.d@gmail.com> (https://danhedgecock.com)"
+  ],
   "keywords": [
     "crystal-ball",
     "awesomeness"
   ],
-  "contributors": [
-    "Dan Hedgecock <hedgecock.d@gmail.com> (https://danhedgecock.com)"
-  ],
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
+  },
   "scripts": {
     "commit": "git cz",
     "test": "npm run lint",
     "lint": "eslint *.js",
-    "format": "prettier --write \"*.{js,json,md}\" \"**/*.{js,json,md}\""
+    "labels": "node ./scripts/github-labels.js",
+    "format": "prettier --write \"*.{js,json,md}\" \"scripts/*.{js,json,md}\""
+  },
+  "dependencies": {
+    "inquirer": "~6.0.0",
+    "node-fetch": "~2.2.0"
   },
   "devDependencies": {
     "commitizen": "^2.10.1",
     "cz-customizable": "^5.2.0",
-    "eslint-config-eloquence": "^8.0.0",
-    "prettier": "^1.13.6"
+    "eslint-config-eloquence": "^9.1.0",
+    "prettier": "^1.14.0"
   },
   "config": {
     "commitizen": {
