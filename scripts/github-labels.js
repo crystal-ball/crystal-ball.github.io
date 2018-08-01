@@ -3,7 +3,7 @@ const inquirer = require('inquirer')
 const fetch = require('node-fetch')
 
 const orgLabels = [
-  { name: 'Satus: In Progress', color: '93C54B' },
+  { name: 'Status: In Progress', color: '93C54B' },
   { name: 'Status: Abandoned', color: '000000' },
   { name: 'Status: Help Wanted', color: 'ffc107' },
   { name: 'Status: Needs Info', color: 'ffc107' },
