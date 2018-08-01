@@ -23,7 +23,7 @@ module.exports = {
     { value: 'revert', name: '↩️  revert:     Revert to a commit' },
   ],
 
-  allowCustomScopes: false,
+  allowCustomScopes: true,
   allowBreakingChanges: ['feat', 'fix', 'style', 'refactor', 'perf', 'chore'],
-  scopes: [],
+  scopes: ['labels'],
 }

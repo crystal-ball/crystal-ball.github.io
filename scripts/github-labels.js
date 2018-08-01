@@ -3,23 +3,21 @@ const inquirer = require('inquirer')
 const fetch = require('node-fetch')
 
 const orgLabels = [
-  {
-    name: 'Status: Abandoned',
-    color: '000000',
-    description: 'Issue owner has abandoned issue',
-  },
-  { name: 'Status: Help Wanted', color: 'ffc107', description: 'placeholder' },
-  { name: 'Satus: In Progress', color: '93C54B', description: 'placeholder' },
-  { name: 'Status: Needs Info', color: 'ffc107', description: 'placeholder' },
-  { name: 'Type: Bug', color: 'd9534f', description: 'placeholder' },
-  { name: 'Type: Documentation', color: '29ABE0', description: 'placeholder' },
-  { name: 'Type: Duplicate', color: 'e6e6e6', description: 'placeholder' },
-  { name: 'Type: Enhancement', color: '325D88', description: 'placeholder' },
-  { name: 'Type: Invalid', color: 'e6e6e6', description: 'placeholder' },
-  { name: 'Type: Question', color: '29ABE0', description: 'placeholder' },
-  { name: 'Type: RFC', color: '29ABE0', description: 'placeholder' },
-  { name: 'Type: Wontfix', color: 'e6e6e6', description: 'placeholder' },
-  { name: 'Type: NewThing', color: 'e6e6e6', description: 'placeholder' },
+  { name: 'Satus: In Progress', color: '93C54B' },
+  { name: 'Status: Abandoned', color: '000000' },
+  { name: 'Status: Help Wanted', color: 'ffc107' },
+  { name: 'Status: Needs Info', color: 'ffc107' },
+  { name: 'Type: Bug', color: 'd9534f' },
+  { name: 'Type: Chore', color: '5b6163' },
+  { name: 'Type: Documentation', color: '29ABE0' },
+  { name: 'Type: Duplicate', color: 'e6e6e6' },
+  { name: 'Type: Feature', color: '325D88' },
+  { name: 'Type: Invalid', color: 'e6e6e6' },
+  { name: 'Type: Question', color: '29ABE0' },
+  { name: 'Type: RFC', color: '29ABE0' },
+  { name: 'Type: Refactor', color: '5b6163' },
+  { name: 'Type: Test', color: '325D88' },
+  { name: 'Type: Wontfix', color: 'e6e6e6' },
 ]
 
 const createHeaders = token => ({
