@@ -21,9 +21,7 @@ const orgLabels = [
 ]
 
 const createHeaders = token => ({
-  Authorization: `Basic ${Buffer.from(`${token}:x-oauth-basic`).toString(
-    'base64'
-  )}`,
+  Authorization: `Basic ${Buffer.from(`${token}:x-oauth-basic`).toString('base64')}`,
   Accept: 'application/vnd.github.symmetra-preview+json',
 })
 
@@ -107,9 +105,7 @@ const createOrgLabels = (existingLabels, auth) =>
   new Promise(resolve => {
     const labelExists = a => b => a.name === b.name
     const labelMatches = a => b =>
-      a.name === b.name &&
-      a.color === b.color &&
-      a.description === b.description
+      a.name === b.name && a.color === b.color && a.description === b.description
 
     const createLabels = () => {
       if (!orgLabels.length) {

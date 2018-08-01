@@ -16,6 +16,8 @@
   },
   "scripts": {
     "commit": "git cz",
+    "test": "npm run lint",
+    "lint": "eslint *.js",
     "labels": "node ./scripts/github-labels.js",
     "format": "prettier --write \"*.{js,json,md}\" \"scripts/*.{js,json,md}\""
   },
