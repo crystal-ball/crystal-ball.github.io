@@ -19,17 +19,17 @@
     "test": "npm run lint",
     "lint": "eslint *.js",
     "labels": "node ./scripts/github-labels.js",
-    "format": "prettier --write \"*.{js,json,md}\" \"scripts/*.{js,json,md}\""
+    "format": "prettier --write \"*.{js,md}\" \"{.github,scripts}/**/*.{js,json,md}\""
   },
   "dependencies": {
-    "inquirer": "~6.0.0",
-    "node-fetch": "~2.2.0"
+    "inquirer": "~6.2.1",
+    "node-fetch": "~2.3.0"
   },
   "devDependencies": {
-    "commitizen": "^2.10.1",
-    "cz-customizable": "^5.2.0",
-    "eslint-config-eloquence": "^9.1.0",
-    "prettier": "^1.14.0"
+    "commitizen": "^3.0.5",
+    "cz-customizable": "^5.3.0",
+    "eslint-config-eloquence": "^9.5.1",
+    "prettier": "^1.15.3"
   },
   "config": {
     "commitizen": {
