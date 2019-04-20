@@ -1,7 +1,6 @@
-# 🔮 Crystal Ball Org
+# 🔮 Crystal Ball Fellowship
 
-_This repository contains documentation and shared resources for managing org
-packages._
+_Documentation and standards for managing fellowship projects and packages._
 
 ## Projects
 
