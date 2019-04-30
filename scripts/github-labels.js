@@ -3,6 +3,8 @@ const inquirer = require('inquirer')
 const fetch = require('node-fetch')
 
 const orgLabels = [
+  { name: 'Epic', color: '5f63b7' },
+  { name: 'Renovate', color: '32c3c2' },
   { name: 'Status: In Progress', color: '93C54B' },
   { name: 'Status: Abandoned', color: '000000' },
   { name: 'Status: Help Wanted', color: 'ffc107' },
