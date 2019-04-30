@@ -15,6 +15,7 @@ const orgLabels = [
   { name: 'Type: Duplicate', color: 'e6e6e6' },
   { name: 'Type: Enhancement', color: '325D88' },
   { name: 'Type: Feature', color: '325D88' },
+  { name: 'Type: Fix', color: '5b6163' },
   { name: 'Type: Invalid', color: 'e6e6e6' },
   { name: 'Type: Question', color: '29ABE0' },
   { name: 'Type: RFC', color: '29ABE0' },
