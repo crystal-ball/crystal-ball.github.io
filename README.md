@@ -1,4 +1,4 @@
-# Crystal Ball Projects
+# 📝 Crystal Ball Projects Documentation
 
 <p align="center">
   <em>Documentation and standards for managing 🔮 Projects</em>
