@@ -1,6 +1,6 @@
-# 🔮 Crystal Ball Fellowship
+# Crystal Ball Projects
 
-_Documentation and standards for managing fellowship projects and packages._
+_Documentation and standards for managing 🔮 Projects_
 
 ## Projects
 
@@ -8,22 +8,22 @@ _Documentation and standards for managing fellowship projects and packages._
 - [`cssup`][cssup]
 - [`eslint-config-eloquence`][eloquence]
 - [`svg-symbol-sprite-loader`][sprite-loader]
-- [`webpack-base`][webpack]
 
-## Github
+## Shared packages
 
-Update the project labels using the `./scripts/github-labels.sh` script.
-
-## Commitizen
-
-Repositories should be setup for [commitizen][] and include the commit prompts
-from `./cz-config.js`.
+- [`commitizen-adapter`][]
+- [`prettier-base`][]
+- [`semantic-release-base`][]
+- [`webpack-base`][]
 
 <!-- Links -->
 
+[`commitizen-adapter`]: https://github.com/crystal-ball/commitizen-adapter
+[`prettier-base`]: https://github.com/crystal-ball/prettier-base
+[`semantic-release-base`]: https://github.com/crystal-ball/semantic-release-base
+[`webpack-base`]: https://github.com/crystal-ball/webpack-base
+[commitizen]: https://commitizen.github.io/cz-cli/
+[componentry]: https://github.com/crystal-ball/componentry
+[cssup]: https://github.com/crystal-ball/cssup
 [eloquence]: https://github.com/crystal-ball/eslint-config-eloquence
 [sprite-loader]: https://github.com/crystal-ball/svg-symbol-sprite-loader
-[componentry]: https://github.com/crystal-ball/componentry
-[webpack]: https://github.com/crystal-ball/webpack-base
-[cssup]: https://github.com/crystal-ball/cssup
-[commitizen]: https://commitizen.github.io/cz-cli/
