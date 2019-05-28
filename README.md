@@ -8,18 +8,20 @@
 
 - [`componentry`][componentry]
 - [`cssup`][cssup]
-- [`eslint-config-eloquence`][eloquence]
 - [`svg-symbol-sprite-loader`][sprite-loader]
 
 ## Shared packages
 
+- [`commit-semantics`][]
 - [`commitizen-adapter`][]
-- [`prettier-base`][]
 - [`semantic-release-base`][]
+- [`prettier-base`][]
+- [`eslint-config-eloquence`][eloquence]
 - [`webpack-base`][]
 
 <!-- Links -->
 
+[`commit-semantics`]: https://github.com/crystal-ball/commit-semantics
 [`commitizen-adapter`]: https://github.com/crystal-ball/commitizen-adapter
 [`prettier-base`]: https://github.com/crystal-ball/prettier-base
 [`semantic-release-base`]: https://github.com/crystal-ball/semantic-release-base
