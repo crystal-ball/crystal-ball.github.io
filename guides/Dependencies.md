@@ -14,7 +14,23 @@
   "labels": ["Renovate"]
   ```
 - Include a `"masterIssue"` for funesies
--
+
+```
+{
+  "extends": [
+    "config:base"
+  ],
+  "commitMessagePrefix": "Upgrade: ",
+  "labels": [
+    "Renovate"
+  ],
+  "masterIssue": true,
+  "schedule": [
+    "every weekend"
+  ]
+}
+```
 
 <!-- Links -->
-[Renovate]:https://renovatebot.com/
+
+[renovate]: https://renovatebot.com/
