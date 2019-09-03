@@ -15,22 +15,21 @@
     "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
   },
   "scripts": {
-    "test": "npm run lint",
-    "lint": "NODE_ENV=test eslint --format=pretty **/*.js",
+    "test": "npm run test:lint",
+    "test:lint": "NODE_ENV=test eslint --format=pretty scripts",
     "create-github-labels": "node ./scripts/create-github-labels.js",
-    "format": "prettier --write \"*.{js,md}\" \"{.github,scripts}/**/*.{js,json,md}\""
+    "format": "prettier --write '*.{js,json,md,json}' '**/*.{md,js,json,scss}'"
   },
   "dependencies": {
-    "inquirer": "6.5.0",
+    "inquirer": "7.0.0",
     "node-fetch": "2.6.0"
   },
   "devDependencies": {
-    "@crystal-ball/commit-semantics": "1.1.0",
-    "@crystal-ball/prettier-base": "1.2.0",
-    "eslint-config-eloquence": "12.0.0",
-    "husky": "3.0.0"
+    "@crystal-ball/commit-semantics": "1.2.0",
+    "@crystal-ball/prettier-base": "1.4.0",
+    "eslint-config-eloquence": "12.4.0",
+    "husky": "3.0.5"
   },
-  "prettier": "@crystal-ball/prettier-base",
   "config": {
     "commitizen": {
       "path": "@crystal-ball/commitizen-adapter"
@@ -40,5 +39,6 @@
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
     }
-  }
+  },
+  "prettier": "@crystal-ball/prettier-base"
 }
