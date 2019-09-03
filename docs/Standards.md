@@ -1,6 +1,6 @@
 # Project Standards
 
-_Checklist with standards to ensure that each repo shares_
+\_Checklist with shared standards that every repo follows
 
 #### Docs
 
@@ -9,6 +9,8 @@ _Checklist with standards to ensure that each repo shares_
 - Add LICENSE.md
 - Add `.npmrc` with `save-exact=true`, and `package-lock=false` for packages
 - Add a Contributing.md to the `docs` folder
+- Keep docs in `/docs` folder (single file for Github and project documentation
+  files)
 
 #### Linting
 
@@ -18,7 +20,35 @@ _Checklist with standards to ensure that each repo shares_
 
 #### Formatting
 
-- `@crystal-ball/prettier-base` w/ package config + npm script
+Format all JS, JSON, SCSS and Markdown files with Prettier and the
+`@crystal-ball/prettier-base` configured in the project package.json:
+
+```json
+{
+  "scripts": {
+    "format": "prettier --write '*.{js,json,md,json}' '**/*.{md,js,json,scss}'"
+  },
+  "prettier": "@crystal-ball/prettier-base"
+}
+```
+
+The format match pattern will run against all project directories, include a
+`.prettierignore` config to skip generated or managed output:
+
+```
+# Skip formatting files generated or managed by other tools
+
+# NPM dependencies
+node_modules
+package.json
+package-lock.json
+
+# Jest LCOV output
+coverage
+
+# webpack build output
+dist
+```
 
 #### Commit Semantics
 
