@@ -4,16 +4,16 @@
 
 <div align="center">
 <!-- prettier-ignore-start -->
-  <!-- <a href="https://www.npmjs.com/package/eslint-config-eloquence" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/npm/v/eslint-config-eloquence.svg" alt="current version" />
+  <!-- <a href="https://www.npmjs.com/package/crystal-ball.github.io" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/npm/v/crystal-ball.github.io.svg" alt="current version" />
   </a> -->
-  <a href="https://travis-ci.com/crystal-ball/eslint-config-eloquence" target="_blank" rel="noopener noreferrer">
-    <img src="https://travis-ci.com/crystal-ball/eslint-config-eloquence.svg?branch=master" alt="build status" />
+  <a href="https://travis-ci.com/crystal-ball/crystal-ball.github.io" target="_blank" rel="noopener noreferrer">
+    <img src="https://travis-ci.com/crystal-ball/crystal-ball.github.io.svg?branch=master" alt="build status" />
   </a>
   <a href="https://renovatebot.com/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Renovate-enabled-32c3c2.svg" alt="dependencies managed by Renvoate" />
   </a>
-  <a href="https://github.com/crystal-ball/eslint-config-eloquence#zenhub" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/crystal-ball/crystal-ball.github.io#zenhub" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Shipping_faster_with-ZenHub-5e60ba.svg?style=flat-square" alt="ZenHub" />
   </a>
   <a href="https://prettier.io/" target="_blank" rel="noopener noreferrer">
