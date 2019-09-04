@@ -1,6 +1,8 @@
 <div align="right">
-  <h1>📝 Crystal Ball Projects Documentation</h1>
+  <img height=75 src="./docs/assets/readme-header.png" alt="Crystal Ball Projects documentation">
 </div>
+
+---
 
 <div align="center">
 <!-- prettier-ignore-start -->
@@ -33,7 +35,7 @@
 </div>
 
 <p align="center">
-  <em>Documentation and standards for managing 🔮 Projects</em>
+  <em>Documentation and standards for managing Crystal Ball Projects 🔮✨</em>
 </p>
 
 ## Projects
