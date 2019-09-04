@@ -1,31 +1,23 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve!
 title: 'Bug: '
 labels: 'Type: Bug'
 assignees: ''
 ---
 
-<!--
-  Thank you for contributing to Crystal Ball 🎉
-  Please remember to follow the code of conduct when submitting issues.
--->
+<!-- Please remember to follow the code of conduct when submitting issues 👍 -->
+<!-- Thank you for contributing to Crystal Ball 🎉 -->
 
 ## Summary
 
-<!--
-  Please provide a summary of the issue.
-  Feel free to use as many emojis as you want 😉.
--->
+<!-- Please provide a summary of the issue (Feel free to use as many emojis as you want 😉) -->
 
 High level overview of the issue...
 
 ## Reproduction Steps
 
-<!--
-  Please provide *complete* reproduction steps for the issue, gifs are especially
-  appreciated for complex reproduction steps!
--->
+<!-- Please provide *complete* reproduction steps for the issue (gifs are especially appreciated!) -->
 
 1. Step 1
 1. Step b

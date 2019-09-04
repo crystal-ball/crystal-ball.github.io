@@ -7,3 +7,6 @@ package-lock.json
 
 # Jest LCOV output
 coverage
+
+# webpack build output
+dist

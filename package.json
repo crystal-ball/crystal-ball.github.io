@@ -15,8 +15,9 @@
     "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
   },
   "scripts": {
-    "test": "npm run test:lint",
+    "test": "npm run test:format && npm run test:lint",
     "test:lint": "NODE_ENV=test eslint --format=pretty scripts",
+    "test:format": "prettier --check '*.{js,json,md,json}' '**/*.{md,js,json,scss}'",
     "create-github-labels": "node ./scripts/create-github-labels.js",
     "format": "prettier --write '*.{js,json,md,json}' '**/*.{md,js,json,scss}'"
   },
