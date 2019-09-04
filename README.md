@@ -1,6 +1,8 @@
-# 📝 Crystal Ball Projects Documentation
+<div align="right>
+  <h1>📝 Crystal Ball Projects Documentation</h1>
+</div>
 
-<p align="center">
+<div align="center">
 <!-- prettier-ignore-start -->
   <!-- <a href="https://www.npmjs.com/package/eslint-config-eloquence" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/npm/v/eslint-config-eloquence.svg" alt="current version" />
@@ -28,7 +30,7 @@
     <img src="https://img.shields.io/badge/%F0%9F%92%96%F0%9F%8C%88-full_of_love-F5499E.svg" alt="Full of love" />
   </a>
 <!-- prettier-ignore-end -->
-</p>
+</div>
 
 <p align="center">
   <em>Documentation and standards for managing 🔮 Projects</em>
