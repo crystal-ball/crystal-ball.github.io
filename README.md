@@ -1,4 +1,4 @@
-<div align="right>
+<div align="right">
   <h1>📝 Crystal Ball Projects Documentation</h1>
 </div>
 
