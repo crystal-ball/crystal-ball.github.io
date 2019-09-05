@@ -7,7 +7,7 @@ assignees: ''
 ---
 
 <!-- Please remember to follow the code of conduct when submitting issues 👍 -->
-<!-- Thank you for contributing to Crystal Ball 🎉 -->
+<!-- Thank you for contributing 🎉 -->
 
 ## Summary
 
