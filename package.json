@@ -15,9 +15,10 @@
     "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
   },
   "scripts": {
-    "test": "npm run test:format && npm run test:lint",
-    "test:lint": "NODE_ENV=test eslint --format=pretty scripts",
+    "test": "npm run test:format && npm run test:lint && npm run test:unit",
     "test:format": "prettier --check '*.{js,json,md,json}' '**/*.{md,js,json,scss}'",
+    "test:lint": "NODE_ENV=test eslint --format=pretty scripts",
+    "test:unit": "jest scripts",
     "create-github-labels": "node ./scripts/create-github-labels.js",
     "format": "prettier --write '*.{js,json,md,json}' '**/*.{md,js,json,scss}'"
   },
@@ -28,8 +29,10 @@
   "devDependencies": {
     "@crystal-ball/commit-semantics": "1.2.0",
     "@crystal-ball/prettier-base": "1.4.0",
+    "@types/jest": "24.0.18",
     "eslint-config-eloquence": "12.4.0",
-    "husky": "3.0.5"
+    "husky": "3.0.5",
+    "jest": "24.9.0"
   },
   "config": {
     "commitizen": {
