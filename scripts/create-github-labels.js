@@ -120,7 +120,7 @@ const createOrgLabels = async (existingLabels, auth) => {
   }
 }
 
-const createGithubLables = async () => {
+const createGithubLabels = async () => {
   try {
     const auth = await inquirer.prompt([
       {
@@ -154,4 +154,4 @@ const createGithubLables = async () => {
 }
 
 // 🚀 Kick it off
-createGithubLables()
+createGithubLabels()
