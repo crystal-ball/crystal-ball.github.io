@@ -20,7 +20,7 @@
     "test:lint": "NODE_ENV=test eslint --format=pretty scripts",
     "test:unit": "jest scripts",
     "create-github-labels": "node ./scripts/create-github-labels.js",
-    "format": "prettier --write '*.{js,json,md,json}' '**/*.{md,js,json,scss}'"
+    "format": "prettier --write '*.{js,json,md}' '**/*.{js,json,md,scss}'"
   },
   "dependencies": {
     "inquirer": "7.0.0",
