@@ -54,6 +54,16 @@ maintainability coverage 🎉 Add code coverage by:
 - Output `lcov` code coverage reports from Jest
 - Add a `CC_TEST_REPORTER_ID` env var to Travis from the
   `/settings/test_reporter/` Code Climate dashboard.
-- Add `before_script` and `after_script` lifecycles to `.travis.yml` to
-  configure and call the Code Climate reporter.
+- Add `before_script` and `after_script` lifecycles to `.travis.yml` to install
+  and call the Code Climate reporter.
 - Add the badges!
+
+#### Code coverage with Docker containers
+
+Code coverage from tests run inside of a Docker container need to have the path
+included when reporting the results. Eg if the tests ran at `/usr/src/app` then
+the call to the reporter would need to be:
+
+- `cc-test-reporter format-coverage --prefix /usr/src/app --exit-code $TRAVIS_TEST_RESULT`
+
+> ℹ️ `--exit-code` prevents sending test coverage for failed tests
