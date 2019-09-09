@@ -17,6 +17,10 @@ maintaining Crystal Ball Projects._
 - Project guides or detailed code documentation should be kept in guides in the
   `docs` dir.
 
+## webpack
+
+You can add another loader for Babel transpile of an npm package...
+
 ## Dependencies management
 
 - Projects should use exact versions for better control over dependency updates.
@@ -37,7 +41,20 @@ adding access for a repository.
 
 ### Travis
 
-Enable Travis and add a configuration to build and test the project.
+Enable Travis and add a `.travis.yml` to build and test the project.
+
+#### Slack notifications
+
+Setting up Slack notifications for Travis build status:
+
+1. Install the Travis CLI gem `gem install travis --no-document`
+1. Create a Github token with user permissions
+1. Login to Travis CLI with token `travis login --pro --github-token xxx`
+1. Install the Travis Slack integration and configure room
+1. Encrypt the `account:token#channel` info for a repo
+   `travis encrypt "ACCOUNT:TOKEN#ROOM" --add notifications.slack.rooms`
+
+_[Configuring Slack Notifications](https://docs.travis-ci.com/user/notifications/#configuring-slack-notifications)_
 
 ### Code Climate
 
@@ -57,6 +74,10 @@ maintainability coverage 🎉 Add code coverage by:
 - Add `before_script` and `after_script` lifecycles to `.travis.yml` to install
   and call the Code Climate reporter.
 - Add the badges!
+
+#### Github
+
+- Enable pull request comments
 
 #### Code coverage with Docker containers
 
