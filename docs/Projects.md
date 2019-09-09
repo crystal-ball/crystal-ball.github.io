@@ -52,7 +52,7 @@ Setting up Slack notifications for Travis build status:
 1. Login to Travis CLI with token `travis login --pro --github-token xxx`
 1. Install the Travis Slack integration and configure room
 1. Encrypt the `account:token#channel` info for a repo
-   `travis encrypt "ACCOUNT:TOKEN#ROOM" --add notifications.slack.rooms`
+   `travis encrypt "ACCOUNT:TOKEN#ROOM" --pro --add notifications.slack.rooms`
 
 _[Configuring Slack Notifications](https://docs.travis-ci.com/user/notifications/#configuring-slack-notifications)_
 
