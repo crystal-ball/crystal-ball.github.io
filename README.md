@@ -7,8 +7,8 @@
   <!-- <a href="https://www.npmjs.com/package/crystal-ball.github.io" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/npm/v/crystal-ball.github.io.svg" alt="current version" />
   </a> -->
-  <a href="https://travis-ci.com/crystal-ball/crystal-ball.github.io" target="_blank" rel="noopener noreferrer">
-    <img src="https://travis-ci.com/crystal-ball/crystal-ball.github.io.svg?branch=master" alt="build status" />
+  <a href="https://github.com/crystal-ball/crystal-ball.github.io/actions?workflow=CI%2FCD">
+    <img src="https://github.com/crystal-ball/crystal-ball.github.io/workflows/CI%2FCD/badge.svg" alt="Build status" />
   </a>
   <a href="https://codeclimate.com/github/crystal-ball/crystal-ball.github.io/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/70b90e52c78b35ab947a/maintainability" />
