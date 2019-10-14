@@ -10,18 +10,17 @@ on:
       - master
 
 jobs:
-  ci-cd:
+  test:
+    name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10'
+          node-version: '12'
       - name: Install
-        run: npm ci
-        env:
-          CI: true
+        run: CI=true npm ci
       - name: Code Climate - Setup
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
