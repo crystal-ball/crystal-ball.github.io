@@ -8,7 +8,14 @@ maintaining Crystal Ball Projects._
 - Create a `.github` directory with contributing, pull request and issue
   templates.
 - Update the project labels using the `./scripts/github-labels.sh` script.
-- In the repo settings disable wikis, projects and merge commits
+- In the repo settings 'Features' section disable wikis and projects
+
+  <img src='./assets/features.png'>
+
+- In the repo settings 'Merge button' section disable merge commits and rebase
+  merging, and enable auto-deleting head branches
+
+  <img src='./assets/merge-button.png'>
 
 ## Docs
 
