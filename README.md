@@ -42,31 +42,29 @@
   <em>Documentation and standards for managing Crystal Ball Projects 🔮✨</em>
 </p>
 
-## Projects
-
-- [`componentry`][]
-- [`cssup`][]
-- [`svg-symbol-sprite-loader`][]
-
 ## Prototypes
 
 - [`react-application-prototype`][]
 - [`node-service-prototype`][]
 
-## Shared packages
+## Packages
 
-- [`commit-semantics`][]
-- [`commitizen-adapter`][]
-- [`semantic-release-base`][]
-- [`prettier-base`][]
+- [`componentry`][]
+- [`cssup`][]
+- [`svg-symbol-sprite-loader`][]
+
+## Base packages
+
+- [`commitizen-base`][]
 - [`eslint-config-eloquence`][]
+- [`prettier-base`][]
+- [`semantic-release-base`][]
 - [`webpack-base`][]
 
 <!-- Links -->
 
 <!-- prettier-ignore-start -->
-[`commit-semantics`]:https://github.com/crystal-ball/commit-semantics
-[`commitizen-adapter`]:https://github.com/crystal-ball/commitizen-adapter
+[`commit-base`]:https://github.com/crystal-ball/commit-base
 [`componentry`]:https://github.com/crystal-ball/componentry
 [`cssup`]:https://github.com/crystal-ball/cssup
 [`eslint-config-eloquence`]:https://github.com/crystal-ball/eslint-config-eloquence
