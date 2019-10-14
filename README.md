@@ -64,7 +64,7 @@
 <!-- Links -->
 
 <!-- prettier-ignore-start -->
-[`commit-base`]:https://github.com/crystal-ball/commit-base
+[`commitizen-base`]:https://github.com/crystal-ball/commit-base
 [`componentry`]:https://github.com/crystal-ball/componentry
 [`cssup`]:https://github.com/crystal-ball/cssup
 [`eslint-config-eloquence`]:https://github.com/crystal-ball/eslint-config-eloquence
