@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
+
 'use strict'
 
-/* eslint-disable no-console, no-restricted-syntax, no-await-in-loop, no-continue */
 const inquirer = require('inquirer')
 const fetch = require('node-fetch')
 
@@ -80,6 +81,8 @@ const optionalLabelsDelete = async (existingLabels, auth) => {
     // Skip existing labels that are also project default labels
     if (projectLabels.find(({ name }) => name === label.name)) continue
 
+    // Wait for response before moving on to next question
+    /* eslint-disable-next-line no-await-in-loop */
     const { shouldDelete } = await inquirer.prompt([
       {
         type: 'confirm',
@@ -111,10 +114,14 @@ const createOrgLabels = async (existingLabels, auth) => {
     if (existingLabels.find(label => matches(label, projectLabel))) {
       // Project label already exists, do nothing
     } else if (existingLabels.find(label => exists(label, projectLabel))) {
-      // Project label exists, but needs to be updated
+      // Project label exists, but needs to be updated (wait for update before
+      // moving on to next label)
+      /* eslint-disable-next-line no-await-in-loop */
       await updateLabel(projectLabel, auth)
     } else {
-      // Create the project label
+      // Create the project label (wait for update before
+      // moving on to next label)
+      /* eslint-disable-next-line no-await-in-loop */
       await createLabel(projectLabel, auth)
     }
   }
