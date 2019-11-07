@@ -1,0 +1,452 @@
+import featuresImg from './features.png'
+import mergeButtonImg from './merge-button.png'
+
+# Process
+
+## Repository management
+
+- Update the project labels using the `./scripts/github-labels.sh` script.
+- In the repo settings 'Features' section disable wikis and projects
+
+  <img src={featuresImg} />
+
+- In the repo settings 'Merge button' section disable merge commits and rebase merging,
+  and enable auto-deleting head branches
+
+  <img src={mergeButtonImg} />
+
+## Project management
+
+...working with Zenhub
+
+## Badges
+
+...badges list
+
+# Continuous Integration and Deployment
+
+_Configure github actions for each repo to handle testing each pull request and deploying
+on change to master._
+
+## Continous integration
+
+- Github action configuration
+- Zeit for applications
+- Should build and run tests for each PR
+
+## Continuous deployment
+
+- Github action configuration
+- Should use Semantic Release for publishing npm packages. Include package.json release
+  field to configure:
+
+  ```json
+  {
+    "release": {
+      "extends": ["@crystal-ball/semantic-release-base"]
+    }
+  }
+  ```
+
+## Providing commit info for Cypress+Percy
+
+Because CI runs in Docker, on pull requests, Cypress+Percy are unable to determine the git
+info for the merge commit being tested and show _unknown_/`HEAD` as the branch. This is
+fixed by checking for a merging branch commit SHA in the `github` workflow context. If it
+exists it's used to determine the commit info for the test run, otherwise the Github
+Action workflow env variables contain the correct info for master branch pushes.
+
+# Commits
+
+_*Goal* Automate generating a changelog and determining package version for a release
+using its commits._
+
+#### Workflow
+
+1. Use [`husky`][] and [`commitizen`][] to create a pre-commit hook with Commitizen
+   interactive prompts to create commits.
+1. Use the Github [Commit Lint][] app to add a check to PRs linting commit format.
+1. (TBD) Use [`semantic-release`][] to manage all publish tasks, including tags,
+   changelogs and npm publishing
+
+#### Commit format
+
+The [ESLint commit format][] is automatically constructed by Commitizen.
+
+#### Commitizen+Husky
+
+_Install dependencies_
+
+```
+npm i -D commitizen cz-adapter-eslint husky
+```
+
+_Add git hook with Husky_
+
+```
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+    }
+  }
+```
+
+<!-- Links -->
+
+[`husky`]: https://github.com/typicode/husky
+[`commitizen`]: https://github.com/commitizen/cz-cli
+[`semantic-release`]: https://github.com/semantic-release/semantic-release
+[commit lint]: https://www.commit-lint.com/
+[eslint commit guidelines]:
+  https://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes
+
+# Releases
+
+!Make it automated
+
+Docs on setting up automated releases with semantic
+
+In CI run: `npx semantic-release`
+
+Include semantic-release-base config in `package.json`
+
+```
+{
+  "release": {
+    "extends": ["@crystal-ball/semantic-release-base"]
+  }
+}
+```
+
+#### Github Actions
+
+...TODO
+
+# Dependencies management
+
+_Dependencies management involves installing exact versions to try and ensure consistent
+builds. Renovate should be run weekly against repos to update dependencies._
+
+- Projects should use exact versions for better control over dependency updates. For
+  packages lockfiles should be disabled to more closely mirror how the package will be
+  installed
+
+### Shared
+
+- Include `.npmrc` for exact versions:
+
+  ```
+  exact=true
+  ```
+
+- Use [Renovate][] to auto manage dependency updates.
+- Pin dependencies, base packs can also lock dependencies because they are managing that
+  domain for a project.
+- Always use `npm ci` in CI/CD builds for apps/services to install from the package
+  lockfile.
+
+### Packages
+
+- Include config in `.npmrc` to skip generating a package lockfile, this will more closely
+  resemble how the package is consumed
+  ```
+  package-lock=false
+  ```
+
+<!-- Links -->
+
+[renovate]: https://renovatebot.com/
+
+# Writing documentation
+
+- Keep the project Readme focused on providing an overview of the project and workflows,
+  details can be documented in a guide.
+- Project guides or detailed code documentation should be kept in guides in the `docs`
+  dir.
+
+## Integrations
+
+### Code Climate
+
+_Integration with Code Climate provides fun visuals for project code coverage and some
+general maintainability best practices._
+
+- https://codeclimate.com/oss/dashboard
+
+#### Setup
+
+Adding a repo to the Code Coverage org will automatically provide maintainability coverage
+🎉 Add code coverage by:
+
+1. In Code Climate dashboard's _Repo Settings_, _Exclude patterns_ add test files patterns
+   to exclude test files from code coverage totals
+   ```
+   cypress/
+   **/*.spec.js
+   ```
+
+- Output `lcov` code coverage reports from Jest
+- Add a `CC_TEST_REPORTER_ID` env var to Travis from the `/settings/test_reporter/` Code
+  Climate dashboard.
+- Add `before_script` and `after_script` lifecycles to `.travis.yml` to install and call
+  the Code Climate reporter.
+- Add the badges!
+
+#### Working with Docker containers
+
+Code coverage from tests run inside of a Docker container need to have the path included
+when reporting the results. Eg if the tests ran at `/usr/src/app` then the call to the
+reporter would need to be:
+
+- `cc-test-reporter format-coverage --prefix /usr/src/app --exit-code $TRAVIS_TEST_RESULT`
+
+> ℹ️ `--exit-code` prevents sending test coverage for failed tests
+
+### Commitizen
+
+...
+
+### Cypress
+
+<div align='center'>
+  <em>Cypress provides fun! end to end testing for React applications 🎉</em>
+</div>
+
+- https://dashboard.cypress.io/
+
+- CI HANDLING REPORTING TO PROJECT DASHBOARD OF RESULTS
+- USING DOCKER COMPOSE AND INCLUDED IMAGE FOR FASTER RUNS
+- TRAVIS ENV VARIABLE AND REPORTER FLAGS
+
+#### CI Workflow
+
+**Better?**
+
+- Is there a way to conditionally include the `--record` flag and record key for CI runs
+  without using a separate Compose file
+
+#### Badge
+
+```html
+<a href="https://dashboard.cypress.io/#/projects/PROJECT-ID/runs">
+  <img
+    src="https://img.shields.io/badge/cypress-dashboard-brightgreen.svg"
+    alt="Cypress Dashboard"
+  />
+</a>
+```
+
+#### Ref
+
+- Setting up a Cypress project:
+  https://docs.cypress.io/guides/dashboard/projects.html#Setup
+- Continuous integration:
+  https://docs.cypress.io/guides/guides/continuous-integration.html#Setting-up-CI
+- Blog post on cypress/included workflow:
+  https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/
+- Example repo with Cypress and Docker Compose:
+  https://github.com/cypress-io/cypress-example-docker-compose
+- Cypress Github integration:
+  https://docs.cypress.io/guides/dashboard/github-integration.html#Install-the-Cypress-GitHub-app
+- Only building `master` with whitelist:
+  https://docs.travis-ci.com/user/customizing-the-build/#building-specific-branches
+
+<!-- Links -->
+<!-- prettier-ignore-start -->
+[Percy environment variables]:https://docs.percy.io/v1/docs/environment-variables
+<!-- prettier-ignore-end -->
+
+# MDX
+
+MDX operates by parsing the markdown into an AST using [remark][] and then generating HTML
+from the AST using [rehype][]. remark and rehype are part of the [unifiedjs][] collective
+
+### Setup
+
+1. Install and configure the loader
+
+```shell
+npm i -D @mdx-js/loader
+```
+
+```js
+configs.rules.push({
+  test: /\.mdx$/,
+  use: ['babel-loader', '@mdx-js/loader'],
+})
+```
+
+Test adding a link here: [Crystal Ball Projects](https://github.com/crystal-ball)
+
+- [Syntax Highlighting](https://mdxjs.com/guides/syntax-highlighting)
+
+### Syntax highlighting
+
+The two methods of adding code block syntax highlighting outlined in the MDX docs are:
+
+1. Use the [`@mapbox/rehype-prism`][] rehype plugin. The plugin operates during the build
+   and adds 0 weight to the vendor bundle, but the result is more opaque for adding
+   additional behavior to rendered React elements.
+1. Using the `prism-react-renderer` package with a custom `CodeBlock` component set on the
+   MDX provider context. The component operates similar to downshift and will allow for
+   additional behaviors to be added into the rendered code, but the packages add `26Kb` to
+   the vendor bundle weight after _gzip_!.
+
+<!-- Links -->
+
+<!-- prettier-ignore-start -->
+[remark]:https://remark.js.org/
+[rehype]:https://github.com/rehypejs/rehype
+[unifiedjs]:https://unifiedjs.com/
+[`@mapbox/rehype-prism`]:https://github.com/mapbox/rehype-prism
+[`prism-react-renderer`]:https://github.com/FormidableLabs/prism-react-renderer
+<!-- prettier-ignore-end -->
+
+# [Percy](https://docs.percy.io/docs)
+
+Percy provides visual regression testing. It is integrated with Cypress and takes
+snapshots during acceptance tests.
+
+## Setup
+
+1. Install the dependency: `@percy/cypress`
+1. Setup healthcheck in `cypress/plugins/index.js`
+1. Import command in `cypress/support/index.js`
+1. Get `PERCY_TOKEN` from Percy dashboard and add to CI/CD secrets
+1. Add a Dockerfile to `cypress` dir to enable installing additional testing dependencies
+   for Cypress and overriding the run command to use Percy
+1. The Percy app isn't able to determine the branch for PRs or for Docker runs, Set a
+   `PERCY_BRANCH` environment variable to fix.
+
+_See *CI-CD#Providing commit info for Cypress+Percy* for details on parsing out commit
+info during workflow runs._
+
+### Ref
+
+- [Percy environment variables][] are used to instruct Percy which branch is being tested.
+- [Percy tutorials][] has example apps for using with Cypress and Storybook.
+
+<!-- Links -->
+<!-- prettier-ignore-start -->
+[Percy environment variables]:https://docs.percy.io/v1/docs/environment-variables
+[Percy tutorials]:https://docs.percy.io/docs/example-apps
+<!-- prettier-ignore-end -->
+
+# Prettier
+
+- USING PRETTIER TO AUTOMATE FORMATTING EVERYTHING
+
+```json
+{
+  "format": "prettier --write '*.{md,js,json,yml}' '{.storybook,docs,cypress,src,test}/**/*.{html,md,js,scss}'"
+}
+```
+
+# Pull Panda
+
+...notifications and reminders for when PRs are open.
+
+# Renovate
+
+_Renovate provides a highly configurable automatic dependency upgrade workflow._
+
+#### Setup
+
+Renovate configuration is managed under the org Settings tab in Installed Github Apps.
+Renovate will automatically open an initial configuration setup PR after adding access for
+a repository.
+
+_Repositories should automate dependencies management with Renovate Bot._
+
+Renovate is configured in order to run automated package updates once per week. The
+dependency and devDependency updates are split into separate PRs with prefixes to trigger
+a release for the dependency updates only.
+
+A master issue is created for each repo just for funesies and all Renovate PRs are labeled
+with the `Renovate` label.
+
+```jsonc
+{
+  // Require a human to merge PRs
+  "automerge": false,
+  // Ignore package.json files in node_modules dirs
+  "ignorePaths": ["**/node_modules/**"],
+  // Only upgrade to unstable versions, eg 2.4.0-rc3, if the _current_ version
+  // is unstable
+  "ignoreUnstable": true,
+  // Github PR label
+  "labels": ["Renovate"],
+  // Do not update the lockfile unless the package.json is also updating
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "masterIssue": true,
+  "masterIssueTitle": "Renovate Bot - Dependencies Management",
+  // Always pin devDependencies, pin dependencies if repo is an application or
+  // service. Allows having range dependencies for npm packages
+  "rangeStrategy": "auto",
+  // Run once per weekend
+  "schedule": ["every weekend"],
+  // Create the PR immediately after issue is created
+  "prCreation": "immediate",
+  // Update existing PRs with new versions immediately
+  "updateNotScheduled": true,
+
+  // dependency and devDependency updates are split into groups in order to
+  // use commitizen prefixes that will trigger a release for dependency changes
+  // but not for devDependencies
+  "packageRules": [
+    {
+      "packagePatterns": ["*"],
+      "commitMessagePrefix": "Chore: ",
+      "commitMessageSuffix": " 🆙",
+      "minor": {
+        "groupName": "minor devDependencies",
+        "groupSlug": "minor-devDependencies"
+      }
+    },
+    {
+      "depTypeList": ["dependencies"],
+      "commitMessagePrefix": "Update: ",
+      "commitMessageSuffix": " 🆙",
+      "minor": {
+        "groupName": "minor dependencies",
+        "groupSlug": "minor-dependencies"
+      }
+    }
+  ]
+}
+```
+
+[Renovate Docs](https://docs.renovatebot.com/)
+
+# Semantic Release
+
+...automates publishing packages
+
+# Slack
+
+...getting notifications in Slack channels by repo
+
+# Snyk
+
+Add a badge for vulns
+
+# Zeit
+
+1. Set an `engines` in `package.json` to configure the version of Node.js used by the
+   static builder
+   ([Static Build Project Node.js Version](https://zeit.co/docs/builders#official-builders/static-builds/static-build-project-node-js-version))
+2. Include build variables to prevent Cypress binary from being installed for faster
+   builds.
+   ([Cypress - Skipping Installation](https://docs.cypress.io/guides/getting-started/installing-cypress.html#Skipping-installation))
+3. Add a route config for all resources to add a `cache-control` header for long term
+   caching of webpack hashed build assets.
+   ([Zeit configuration - headers](https://zeit.co/docs/configuration/#routes/headers))
+4. Add a route config that rewrites all requests to `/` to support single page app
+   `index.html` resolution
+   ([Zeit configuration - SPA Fallback](https://zeit.co/docs/configuration/#routes/advanced/spa-fallback))
+
+# ZenHub
+
+...the best!

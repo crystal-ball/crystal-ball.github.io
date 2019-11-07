@@ -2,7 +2,7 @@
 
 ## Services
 
-- Postgres | Redis
+- Postgres, Redis
 - Node
 - Express
 
