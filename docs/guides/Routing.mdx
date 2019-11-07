@@ -1,0 +1,18 @@
+# Routing
+
+Routing is managed with Redux as a `routing` store slice.
+
+1. Middleware `routingMiddleware` handles syncing the url whenever a routing action is
+   dispatched.
+1. Fns `parseSearchParams` and `stringifySearchParams` use the browser `URLSearchParams`
+   API to handle search params
+1. `Link` component provides a simple way to dispatch routing actions
+
+1. Redux slice has `pathname` and `searchParams`
+
+- Middleware resets scroll
+- `Link` universal component prevents default behavior and dispatches Redux actions
+
+Unlike many other routing solutions the route params and query params are not stored in
+the store. The pathname is the single source of truth and is available with selectors and
+can then be parsed with `path-to-regexp` or `qs`

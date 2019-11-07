@@ -42,3 +42,8 @@
   https://docs.cypress.io/guides/dashboard/github-integration.html#Install-the-Cypress-GitHub-app
 - Only building `master` with whitelist:
   https://docs.travis-ci.com/user/customizing-the-build/#building-specific-branches
+
+<!-- Links -->
+<!-- prettier-ignore-start -->
+[Percy environment variables]:https://docs.percy.io/v1/docs/environment-variables
+<!-- prettier-ignore-end -->

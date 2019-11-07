@@ -22,3 +22,12 @@ deploying on change to master._
     }
   }
   ```
+
+## Providing commit info for Cypress+Percy
+
+Because CI runs in Docker, on pull requests, Cypress+Percy are unable to
+determine the git info for the merge commit being tested and show
+_unknown_/`HEAD` as the branch. This is fixed by checking for a merging branch
+commit SHA in the `github` workflow context. If it exists it's used to determine
+the commit info for the test run, otherwise the Github Action workflow env
+variables contain the correct info for master branch pushes.
