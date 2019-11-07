@@ -16,3 +16,11 @@ Deploy: ??
 - Redux | Componentry
 
 Deploy: Zeit
+
+# Bundle Sizes
+
+_Relative weights of the default vendor libraries included in app setup_
+
+| Package                | Size _(gzipped)_ | Description                                   |
+| ---------------------- | ---------------- | --------------------------------------------- |
+| `prism-react-renderer` | `25kb`           | Runtime code block syntax highlighting access |
