@@ -6,6 +6,7 @@ const inquirer = require('inquirer')
 const fetch = require('node-fetch')
 
 const projectLabels = [
+  { name: 'Breaking Changes', color: 'ff3b8c' },
   { name: 'Epic', color: '5f63b7' }, // Zenhub
   { name: 'Released', color: 'e10079' }, // Semantic Release
   { name: 'Renovate', color: '32c3c2' }, // Renovate
