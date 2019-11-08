@@ -13,6 +13,7 @@ const projectLabels = [
   { name: 'Status: Abandoned', color: '000000' },
   { name: 'Status: Help Wanted', color: 'ffc107' },
   { name: 'Status: Needs Info', color: 'ffc107' },
+  { name: 'Status: Icebox', color: 'bae6d9' },
   { name: 'Type: Bug', color: 'd9534f' },
   { name: 'Type: Chore', color: '5b6163' },
   { name: 'Type: Documentation', color: '29ABE0' },
