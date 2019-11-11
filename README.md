@@ -20,11 +20,8 @@
     <img src="https://snyk.io/test/github/crystal-ball/crystal-ball.github.io/badge.svg?targetFile=package.json" alt="Known vulnerabilities" valign="text-top" />
   </a>
   <!-- <a href="https://dashboard.cypress.io/#/projects/PROJECT/runs">
-    <img src="https://img.shields.io/badge/cypress-dashboard-brightgreen.svg" alt="Cypress dashboard" valign="text-top" />
+    <img src="https://img.shields.io/badge/Cypress-dashboard-brightgreen.svg" alt="Cypress dashboard" valign="text-top" />
   </a> -->
-  <a href="https://securityheaders.com/?q=https%3A%2F%2Fcrystal-ball.github.io&followRedirects=on">
-    <img src="https://img.shields.io/security-headers?url=https%3A%2F%2Fcrystal-ball.github.io%2F" alt="Security headers status" valign="text-top" />
-  </a>
   <a href="https://codeclimate.com/github/crystal-ball/crystal-ball.github.io/test_coverage">
     <img src="https://api.codeclimate.com/v1/badges/70b90e52c78b35ab947a/test_coverage" alt="Test coverage" valign="text-top" />
   </a>
@@ -35,7 +32,7 @@
 
   <br />
   <!-- <a href="https://zeit.co/crystal-ball/PROJECT">
-    <img src="https://img.shields.io/badge/Hosting-▲%20Zeit-7de0c4" alt="Zeit Now" valign="text-top" />
+    <img src="https://img.shields.io/badge/hosting-▲%20Zeit-7de0c4" alt="Zeit Now" valign="text-top" />
   </a> -->
   <a href="https://renovatebot.com/">
     <img src="https://img.shields.io/badge/Renovate-enabled-32c3c2.svg" alt="Renovate" valign="text-top" />
@@ -44,16 +41,16 @@
     <img src="https://img.shields.io/badge/Commitizen-%E2%9C%93%20friendly-10e67b" alt="Commitizen friendly" valign="text-top" />
   </a>
   <a href="https://github.com/crystal-ball/crystal-ball.github.io#workspaces/-projects-5b88b5c9af3c0a2186966767/board?repos=136812233">
-    <img src="https://img.shields.io/badge/Shipping_faster_with-ZenHub-5e60ba.svg" alt="ZenHub" valign="text-top" />
+    <img src="https://img.shields.io/badge/ZenHub-managed-5e60ba.svg" alt="ZenHub" valign="text-top" />
   </a>
   <!-- <a href="https://percy.io/Crystal-Ball/react-application-prototype">
-    <img src="https://percy.io/static/images/percy-badge.svg" alt="Percy snapshot testing" valign="text-top" />
+    <img src="https://img.shields.io/badge/testing-%F0%9F%A6%94%20Percy-9e66bf" alt="Percy snapshot testing" valign="text-top" />
   </a> -->
   <!-- <a href="https://semantic-release.gitbook.io/semantic-release/">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic_release-e10079.svg" alt="Semantic Release" valign="text-top"/>
   </a> -->
   <a href="./code-of-conduct.md">
-    <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-de8cf2.svg" alt="Contributor Covenant" valign="text-top" />
+    <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0-de8cf2.svg" alt="Contributor Covenant" valign="text-top" />
   </a>
   <code>:integrations</code>
 
