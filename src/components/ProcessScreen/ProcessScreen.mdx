@@ -29,6 +29,49 @@ the dreaded _software erosion_.
   .github template repository, it should be included in each repo root for visibility
   because it's important)_
 
+## Dependencies management
+
+Dependencies management is automated with [Renovate][].
+
+- Dependency version change visibility is increased by pinning all versions.
+- Project dependency resolution is locked across builds by including lock files.
+- Package dependency resolution happens at build time by not including lock files. This is
+  meant to provide more realistic testing during CI/CD by mirroring how the package
+  dependencies will be resolved when installed by a consumer.
+- Updates follow a waterfall schedule through the week to allow consumers to update to the
+  most recent versions.
+
+#### npm configuration
+
+All repositories should include an `.npmrc` config file setting dependency additions to
+exact versions. Packages should also disable lock files.
+
+```
+save-exact=true
+# Package lock files disabled:
+package-lock=false
+```
+
+#### Package dependencies semver
+
+Packages should use minor ranges for any dependencies that might also be included by other
+packages to prevent multiple versions being required _(eg if `nanoid` is a dependency it
+should be specified with a `^` range)_. Dependencies that are explicitly managed by that
+package can be pinned for better version control _(eg the `@crystal-ball/webpack-base`
+package should pin the `webpack` dependency)_.
+
+#### Monitoring dependency vulnerabilities
+
+Dependency vulnerabilities monitoring is setup with [Snyk][]. Automated security fix PRs
+are currently disabled due to confusion of how they are applied. The Github integration
+will include a check for all PRs to notify if the change introduces any new high severity
+vulnerabilities.
+
+<!-- prettier-ignore-start -->
+[Renovate]:https://docs.renovatebot.com/
+[Snyk]:https://snyk.io/
+<!-- prettier-ignore-end -->
+
 ## Badges
 
 It's all for the badges.
@@ -129,47 +172,6 @@ It's all for the badges.
 
 <!-- Editing finished -->
 
-## Dependencies management
-
-Renovate
-
-_Dependencies management involves installing exact versions to try and ensure consistent
-builds. Renovate should be run weekly against repos to update dependencies._
-
-- Projects should use exact versions for better control over dependency updates. For
-  packages lockfiles should be disabled to more closely mirror how the package will be
-  installed
-
-### Shared
-
-- Include `.npmrc` for exact versions:
-
-  ```
-  exact=true
-  ```
-
-- Use [Renovate][] to auto manage dependency updates.
-- Pin dependencies, base packs can also lock dependencies because they are managing that
-  domain for a project.
-- Always use `npm ci` in CI/CD builds for apps/services to install from the package
-  lockfile.
-
-### Packages
-
-- Include config in `.npmrc` to skip generating a package lockfile, this will more closely
-  resemble how the package is consumed
-  ```
-  package-lock=false
-  ```
-
-<!-- Links -->
-
-[renovate]: https://renovatebot.com/
-
-## Vulnerabilities monitoring
-
-Use Snyk to monitor repositories for vulnerabilities
-
 # Continuous Integration and Deployment
 
 _Configure github actions for each repo to handle testing each pull request and deploying
@@ -177,6 +179,8 @@ on change to master._
 
 ## Continous integration
 
+- Always use `npm ci` in CI/CD builds for apps/services to install from the package
+  lockfile.
 - Github action configuration
 - Zeit for applications
 - Should build and run tests for each PR
@@ -414,10 +418,10 @@ The two methods of adding code block syntax highlighting outlined in the MDX doc
 [`prism-react-renderer`]:https://github.com/FormidableLabs/prism-react-renderer
 <!-- prettier-ignore-end -->
 
-# [Percy](https://docs.percy.io/docs)
+# Percy
 
-Percy provides visual regression testing. It is integrated with Cypress and takes
-snapshots during acceptance tests.
+[Percy](https://docs.percy.io/docs) provides visual regression testing. It is integrated
+with Cypress and takes snapshots during acceptance tests.
 
 ## Setup
 
@@ -460,77 +464,36 @@ info during workflow runs._
 
 # Renovate
 
-_Renovate provides a highly configurable automatic dependency upgrade workflow._
+Repository access for the Renovate Github app is configured in the [Github org installed
+apps settings][installed-apps]. For individual repository setup, Renovate will
+automatically open an initial configuration PR after adding access for a repository.
 
-#### Setup
+- Renovate configurations should match the [Renovate standard
+  configuration][renovate.json] maintained in this repository.
+  - The `commitMessageTopic` should be customized to either `application`, `service` or
+    `package` depending on the repository.
+  - The `schedule` should be set to match the repository type.
+- Dependency update PR titles: `Update: Application dependencies upgrades 🆙`
+- Dev dependency update PR titles: `Chore: Update application dev dependencies 🆙`
+- A master issue is created for each repo just for funesies and all Renovate PRs are
+  labeled with the `Renovate` label.
+- Updates for dependencies and devDependencies are separated in order to prevent
+  publishing new package versions for development+testing dependency updates.
+- Config `separateMajorMinor` is left `false` to provide higher visibility for updates
+  with major version bumps. It is also possible to delay a major version update if
+  necessary (eg when waiting for community Babel support).
 
-Renovate configuration is managed under the org Settings tab in Installed Github Apps.
-Renovate will automatically open an initial configuration setup PR after adding access for
-a repository.
+#### Schedule
 
-_Repositories should automate dependencies management with Renovate Bot._
+- Monday: Authoring tools (eg semantic-release-base, commitizen-base, prettier-base)
+- Tuesday: Development toolsets (eg webpack-base, svg-symbol-sprite-loader)
+- Wednesday: Prototypes (eg react-application-prototype)
+- Thursday: Projects (eg gitpush-f, hecka-rad)
 
-Renovate is configured in order to run automated package updates once per week. The
-dependency and devDependency updates are split into separate PRs with prefixes to trigger
-a release for the dependency updates only.
-
-A master issue is created for each repo just for funesies and all Renovate PRs are labeled
-with the `Renovate` label.
-
-```jsonc
-{
-  // Require a human to merge PRs
-  "automerge": false,
-  // Ignore package.json files in node_modules dirs
-  "ignorePaths": ["**/node_modules/**"],
-  // Only upgrade to unstable versions, eg 2.4.0-rc3, if the _current_ version
-  // is unstable
-  "ignoreUnstable": true,
-  // Github PR label
-  "labels": ["Renovate"],
-  // Do not update the lockfile unless the package.json is also updating
-  "lockFileMaintenance": {
-    "enabled": false
-  },
-  "masterIssue": true,
-  "masterIssueTitle": "Renovate Bot - Dependencies Management",
-  // Always pin devDependencies, pin dependencies if repo is an application or
-  // service. Allows having range dependencies for npm packages
-  "rangeStrategy": "auto",
-  // Run once per weekend
-  "schedule": ["every weekend"],
-  // Create the PR immediately after issue is created
-  "prCreation": "immediate",
-  // Update existing PRs with new versions immediately
-  "updateNotScheduled": true,
-
-  // dependency and devDependency updates are split into groups in order to
-  // use commitizen prefixes that will trigger a release for dependency changes
-  // but not for devDependencies
-  "packageRules": [
-    {
-      "packagePatterns": ["*"],
-      "commitMessagePrefix": "Chore: ",
-      "commitMessageSuffix": " 🆙",
-      "minor": {
-        "groupName": "minor devDependencies",
-        "groupSlug": "minor-devDependencies"
-      }
-    },
-    {
-      "depTypeList": ["dependencies"],
-      "commitMessagePrefix": "Update: ",
-      "commitMessageSuffix": " 🆙",
-      "minor": {
-        "groupName": "minor dependencies",
-        "groupSlug": "minor-dependencies"
-      }
-    }
-  ]
-}
-```
-
+<!-- prettier-ignore-start -->
+[renovate.json]:https://github.com/crystal-ball/crystal-ball.github.io/blob/master/renovate.json
 [Renovate Docs](https://docs.renovatebot.com/)
+<!-- prettier-ignore-end -->
 
 # Semantic Release
 
@@ -542,7 +505,9 @@ with the `Renovate` label.
 
 # Snyk
 
-Add a badge for vulns
+Repository access for Snyk is configured in the [Github org third party access
+setting][app-access]. Vulnerabilities reporting and badge info is available in the
+[Snyk dashboard](https://app.snyk.io/org/crystal-ball/projects)
 
 # Zeit
 
@@ -562,3 +527,8 @@ Add a badge for vulns
 # ZenHub
 
 ...the best!
+
+<!-- prettier-ignore-start -->
+[app-access]:https://github.com/organizations/crystal-ball/settings/oauth_application_policy
+[installed-apps]:https://github.com/organizations/crystal-ball/settings/installations
+<!-- prettier-ignore-end -->
