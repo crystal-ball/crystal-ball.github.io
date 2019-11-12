@@ -1,30 +1,174 @@
-import featuresImg from './features.png'
-import mergeButtonImg from './merge-button.png'
-
 # Process
+
+Modern modules automate as much as possible in the project. Small modules make for better
+composition, but there is a maintenance cost for every module created. Automating as much
+of the module 'infrastructure' as possible helps keep maintenance up to date which reduces
+the dreaded _software erosion_.
+
+---
 
 ## Repository management
 
-- Update the project labels using the `./scripts/github-labels.sh` script.
-- In the repo settings 'Features' section disable wikis and projects
-
-  <img src={featuresImg} />
-
-- In the repo settings 'Merge button' section disable merge commits and rebase merging,
-  and enable auto-deleting head branches
-
-  <img src={mergeButtonImg} />
-
-- The [.github](https://github.com/crystal-ball/.github) repository provides issue and
-  pull request templates for all repositories.
-
-## Project management
-
-...working with Zenhub
+- Consistently use labels for grouping issues across repositories by using the issue
+  labels script in `scripts/create-github-labels.js`
+- Declutter repository header tabs by disabling wikis and projects in the
+  _Settings.Options:Features_ settings. Documentation should be maintained in a `/docs`
+  directory and project management should use ZenHub releases and projects.
+- Keep a streamlined git history by disabling merge commits and rebase merging in the
+  _Settings.Options:Merge Button_ settings.
+- Keep branches cleaned up by enabling automatically deleting head branches in the
+  _Settings.Options:Merge Button_ settings.
+- Only define needed configuration files by using the shared issue and pull request
+  templates defined in the [.github](https://github.com/crystal-ball/.github) template
+  repository.
+- Provide details on how to contribute with a contributing guide in
+  `.github/contributing.md`. Include a guide in each repo so that additional notes can be
+  added for the design of that specific repository.
+- Support community health by including a copy of the Contributor Covenant code of conduct
+  in the repository root. _(Although it's possible to include a code of conduct in the
+  .github template repository, it should be included in each repo root for visibility
+  because it's important)_
 
 ## Badges
 
-Include all the badges for the fun of it 🎉 _(See the README for reference)_
+It's all for the badges.
+
+- <img
+    src='https://img.shields.io/npm/v/componentry'
+    alt='Package version'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/bundlephobia/minzip/componentry'
+    alt='Bundle size'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/npm/dt/componentry?color=blue'
+    alt='NPM downloads'
+    valign='text-top'
+  />
+- <img
+    src='https://github.com/crystal-ball/crystal-ball.github.io/workflows/CI%2FCD/badge.svg'
+    alt='Build status'
+    valign='text-top'
+  />
+- <img
+    src='https://snyk.io/test/github/crystal-ball/crystal-ball.github.io/badge.svg?targetFile=package.json'
+    alt='Known vulnerabilities'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/Cypress-dashboard-brightgreen.svg'
+    alt='Cypress dashboard'
+    valign='text-top'
+  />
+- <img
+    src='https://api.codeclimate.com/v1/badges/70b90e52c78b35ab947a/test_coverage'
+    alt='Test coverage'
+    valign='text-top'
+  />
+- <img
+    src='https://api.codeclimate.com/v1/badges/70b90e52c78b35ab947a/maintainability'
+    alt='Maintainability'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/hosting-▲%20Zeit-7de0c4'
+    alt='Zeit Now'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/Renovate-enabled-32c3c2.svg'
+    alt='Renovate'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/Commitizen-%E2%9C%93%20friendly-10e67b'
+    alt='Commitizen friendly'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/ZenHub-managed-5e60ba.svg'
+    alt='ZenHub'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/testing-%F0%9F%A6%94%20Percy-9e66bf'
+    alt='Percy snapshot testing'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic_release-e10079.svg'
+    alt='Semantic Release'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/Contributor%20Covenant-v2.0-de8cf2.svg'
+    alt='Contributor Covenant'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/%F0%9F%94%AE%E2%9C%A8-contains_magic-D831D7.svg'
+    alt='Contains magic'
+    valign='text-top'
+  />
+- <img
+    src='https://img.shields.io/badge/%F0%9F%92%96%F0%9F%8C%88-full_of_love-F5499E.svg'
+    alt='Full of love'
+    valign='text-top'
+  />
+
+- Design custom badges using [Shields IO](https://shields.io/).
+- Include logos from [Simple Icons](https://simpleicons.org) for badges with integrations.
+
+## Project management
+
+- Keep the ZenHub board relevant and easy to work within by documenting long term
+  repository goals and ideas in the _Roadmap_ section of the Contributing doc.
+
+<!-- Editing finished -->
+
+## Dependencies management
+
+Renovate
+
+_Dependencies management involves installing exact versions to try and ensure consistent
+builds. Renovate should be run weekly against repos to update dependencies._
+
+- Projects should use exact versions for better control over dependency updates. For
+  packages lockfiles should be disabled to more closely mirror how the package will be
+  installed
+
+### Shared
+
+- Include `.npmrc` for exact versions:
+
+  ```
+  exact=true
+  ```
+
+- Use [Renovate][] to auto manage dependency updates.
+- Pin dependencies, base packs can also lock dependencies because they are managing that
+  domain for a project.
+- Always use `npm ci` in CI/CD builds for apps/services to install from the package
+  lockfile.
+
+### Packages
+
+- Include config in `.npmrc` to skip generating a package lockfile, this will more closely
+  resemble how the package is consumed
+  ```
+  package-lock=false
+  ```
+
+<!-- Links -->
+
+[renovate]: https://renovatebot.com/
+
+## Vulnerabilities monitoring
+
+Use Snyk to monitor repositories for vulnerabilities
 
 # Continuous Integration and Deployment
 
@@ -124,41 +268,6 @@ Include semantic-release-base config in `package.json`
 #### Github Actions
 
 ...TODO
-
-# Dependencies management
-
-_Dependencies management involves installing exact versions to try and ensure consistent
-builds. Renovate should be run weekly against repos to update dependencies._
-
-- Projects should use exact versions for better control over dependency updates. For
-  packages lockfiles should be disabled to more closely mirror how the package will be
-  installed
-
-### Shared
-
-- Include `.npmrc` for exact versions:
-
-  ```
-  exact=true
-  ```
-
-- Use [Renovate][] to auto manage dependency updates.
-- Pin dependencies, base packs can also lock dependencies because they are managing that
-  domain for a project.
-- Always use `npm ci` in CI/CD builds for apps/services to install from the package
-  lockfile.
-
-### Packages
-
-- Include config in `.npmrc` to skip generating a package lockfile, this will more closely
-  resemble how the package is consumed
-  ```
-  package-lock=false
-  ```
-
-<!-- Links -->
-
-[renovate]: https://renovatebot.com/
 
 # Writing documentation
 
