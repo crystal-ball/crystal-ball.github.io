@@ -1,13 +1,29 @@
+<!--
+  ℹ️ This document is for recording the shared processes used to manage many
+  repositories with minimal effort.
+
+  Processes are defined by the workflows they solve and should include an
+  overview of the problem being solved followed by setup/configurations
+-->
+
 # Process
 
-Modern modules automate as much as possible in the project. Small modules make for better
-composition, but there is a maintenance cost for every module created. Automating as much
-of the module 'infrastructure' as possible helps keep maintenance up to date which reduces
-the dreaded _software erosion_.
+Small modules are easier to create, test, and use, but each module also has a maintenance
+cost. Modern modules automate as much of the module _infrastructure_ as possible to
+minimize the cost of keeping modules up to date.
+
+- [Repository managment](#repository-management)
+- [Dependencies management](#dependencies-management)
+- [Code authoring](#code-authoring)
 
 ---
 
 ## Repository management
+
+Github repository management includes using templates to automatically include community
+health files and optimizing repository issue and merge settings.
+
+**Github**
 
 - Consistently use labels for grouping issues across repositories by using the issue
   labels script in `scripts/create-github-labels.js`
@@ -19,8 +35,7 @@ the dreaded _software erosion_.
 - Keep branches cleaned up by enabling automatically deleting head branches in the
   _Settings.Options:Merge Button_ settings.
 - Only define needed configuration files by using the shared issue and pull request
-  templates defined in the [.github](https://github.com/crystal-ball/.github) template
-  repository.
+  templates defined in the [.github][] template repository.
 - Provide details on how to contribute with a contributing guide in
   `.github/contributing.md`. Include a guide in each repo so that additional notes can be
   added for the design of that specific repository.
@@ -29,28 +44,16 @@ the dreaded _software erosion_.
   .github template repository, it should be included in each repo root for visibility
   because it's important)_
 
+<!-- prettier-ignore-start -->
+[.github]:https://github.com/crystal-ball/.github
+<!-- prettier-ignore-end -->
+
 ## Dependencies management
 
-Dependencies management is automated with [Renovate][].
-
-- Dependency version change visibility is increased by pinning all versions.
-- Project dependency resolution is locked across builds by including lock files.
-- Package dependency resolution happens at build time by not including lock files. This is
-  meant to provide more realistic testing during CI/CD by mirroring how the package
-  dependencies will be resolved when installed by a consumer.
-- Updates follow a waterfall schedule through the week to allow consumers to update to the
-  most recent versions.
-
-#### npm configuration
-
-All repositories should include an `.npmrc` config file setting dependency additions to
-exact versions. Packages should also disable lock files.
-
-```
-save-exact=true
-# Package lock files disabled:
-package-lock=false
-```
+Updating module dependencies automatically cuts down on one of the primary maintenance
+burdens of modules, and helps keep vulnerabilities out of upstream projects. A rolling
+Renovate schedule is setup to update code authoring packages, then tools packages, then
+prototypes and finally apps/services.
 
 #### Package dependencies semver
 
@@ -62,14 +65,114 @@ package should pin the `webpack` dependency)_.
 
 #### Monitoring dependency vulnerabilities
 
-Dependency vulnerabilities monitoring is setup with [Snyk][]. Automated security fix PRs
-are currently disabled due to confusion of how they are applied. The Github integration
-will include a check for all PRs to notify if the change introduces any new high severity
+Dependencies are monitered for vulnerabilities with [Snyk][]. The Github integration will
+include a check for all PRs to notify if the change introduces any new high severity
 vulnerabilities.
+
+**Renovate**
+
+- Repository access for the Renovate Github app is configured in the [Github org installed
+  apps settings][installed-apps]. After a repo is added to Renovate it will open a
+  configuration setup PR.
+- Renovate configurations should match the [Renovate configuration][renovate.json]
+  maintained in this repository.
+  - The `commitMessageTopic` should be customized to either `application`, `service` or
+    `package` depending on the repository.
+  - The `schedule` should be set to match the repository type.
+- A master issue is created for each repo just for funesies and all Renovate PRs are
+  labeled with the `Renovate` label.
+- Updates for dependencies and devDependencies are separated in order to prevent
+  publishing new package versions for development+testing dependency updates.
+- Config `separateMajorMinor` is left `false` to provide higher visibility for updates
+  with major version bumps. It is also possible to delay a major version update if
+  necessary (eg when waiting for community Babel support).
+- Package dependency resolution happens at build time by not including lock files. This is
+  meant to provide more realistic testing during CI/CD by mirroring how the package
+  dependencies will be resolved when installed by a consumer.
+- Updates are rolled upstream through the week by updating on a rolling schedule:
+  - Monday: Authoring tools (eg semantic-release-base, commitizen-base, prettier-base)
+  - Tuesday: Development toolsets (eg webpack-base, svg-symbol-sprite-loader)
+  - Wednesday: Prototypes (eg react-application-prototype)
+  - Thursday: Projects (eg gitpush-f, hecka-rad)
+
+**Snyk**
+
+- Configurations are managed in the [Snyk dashboard][]
+- Vulnerabilities reporting and badge info is available in the [Snyk dashboard][]
+- Automated security fix PRs are currently disabled due to confusion of how they are
+  applied.
+
+**npm**
+
+- Dependency version change visibility is increased by pinning all versions in each
+  `package.json`.
+- Project dependency resolution is locked across builds by including lock files.
+- npm install behavior is configured with an `.npmrc`
+
+  ```
+  save-exact=true
+  # Package lock files disabled:
+  package-lock=false
+  ```
 
 <!-- prettier-ignore-start -->
 [Renovate]:https://docs.renovatebot.com/
+[Renovate Docs](https://docs.renovatebot.com/)
+[renovate.json]:https://github.com/crystal-ball/crystal-ball.github.io/blob/master/renovate.json
 [Snyk]:https://snyk.io/
+[Snyk dashboard]:https://app.snyk.io/org/crystal-ball/projects
+<!-- prettier-ignore-end -->
+
+## Code authoring
+
+Code authoring processes automate code format, style and commit messages consistency to
+make contributing to repos straightforward.
+
+**Commitizen**
+
+- Commit message contents are standardized with [Commitizen][] in order to use Semantic
+  Release for automated package publishing by installing the
+  [`@crystal-ball/commitizen-base`][] package and including the `package.json`
+  configurations:
+
+  ```json
+  "config": {
+    "commitizen": {
+      "path": "@crystal-ball/commitizen-base"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  }
+  ```
+
+**ESLint**
+
+- Statically analyzable code quality and style choices are automated with [ESLint][] by
+  installing the [`eslint-config-eloquence`][] package and setting up `eslintrc.js`
+  configs.
+
+**Prettier**
+
+- Consistently format code with [Prettier][] by installing the
+  [`@crystal-ball/prettier-base`] package and including the `package.json` configurations:
+
+  ```json
+  "scripts": {
+    "format": "prettier --write '*.{md,js,json,yml}' '{.storybook,docs,cypress,src,test}/**/*.{html,md,js,scss}'"
+  },
+  "prettier": "@crystal-ball/prettier-base"
+  ```
+
+<!-- prettier-ignore-start -->
+[Commitizen]:https://commitizen.github.io/cz-cli/
+[Prettier]:https://prettier.io/
+[ESLint]:https://eslint.org/
+[`eslint-config-eloquence`]:https://github.com/crystal-ball/eslint-config-eloquence
+[`@crystal-ball/commitizen-base`]:https://github.com/crystal-ball/commitizen-base
+[`@crystal-ball/prettier-base`]:https://github.com/crystal-ball/prettier-base
 <!-- prettier-ignore-end -->
 
 ## Badges
@@ -207,50 +310,6 @@ fixed by checking for a merging branch commit SHA in the `github` workflow conte
 exists it's used to determine the commit info for the test run, otherwise the Github
 Action workflow env variables contain the correct info for master branch pushes.
 
-# Commits
-
-_*Goal* Automate generating a changelog and determining package version for a release
-using its commits._
-
-#### Workflow
-
-1. Use [`husky`][] and [`commitizen`][] to create a pre-commit hook with Commitizen
-   interactive prompts to create commits.
-1. Use the Github [Commit Lint][] app to add a check to PRs linting commit format.
-1. (TBD) Use [`semantic-release`][] to manage all publish tasks, including tags,
-   changelogs and npm publishing
-
-#### Commit format
-
-The [ESLint commit format][] is automatically constructed by Commitizen.
-
-#### Commitizen+Husky
-
-_Install dependencies_
-
-```
-npm i -D commitizen cz-adapter-eslint husky
-```
-
-_Add git hook with Husky_
-
-```
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
-    }
-  }
-```
-
-<!-- Links -->
-
-[`husky`]: https://github.com/typicode/husky
-[`commitizen`]: https://github.com/commitizen/cz-cli
-[`semantic-release`]: https://github.com/semantic-release/semantic-release
-[commit lint]: https://www.commit-lint.com/
-[eslint commit guidelines]:
-  https://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes
-
 # Releases
 
 !Make it automated
@@ -317,10 +376,6 @@ reporter would need to be:
 - `cc-test-reporter format-coverage --prefix /usr/src/app --exit-code $TRAVIS_TEST_RESULT`
 
 > ℹ️ `--exit-code` prevents sending test coverage for failed tests
-
-### Commitizen
-
-...
 
 ### Cypress
 
@@ -448,52 +503,9 @@ info during workflow runs._
 [Percy tutorials]:https://docs.percy.io/docs/example-apps
 <!-- prettier-ignore-end -->
 
-# Prettier
-
-- USING PRETTIER TO AUTOMATE FORMATTING EVERYTHING
-
-```json
-{
-  "format": "prettier --write '*.{md,js,json,yml}' '{.storybook,docs,cypress,src,test}/**/*.{html,md,js,scss}'"
-}
-```
-
 # Pull Panda
 
 ...notifications and reminders for when PRs are open.
-
-# Renovate
-
-Repository access for the Renovate Github app is configured in the [Github org installed
-apps settings][installed-apps]. For individual repository setup, Renovate will
-automatically open an initial configuration PR after adding access for a repository.
-
-- Renovate configurations should match the [Renovate standard
-  configuration][renovate.json] maintained in this repository.
-  - The `commitMessageTopic` should be customized to either `application`, `service` or
-    `package` depending on the repository.
-  - The `schedule` should be set to match the repository type.
-- Dependency update PR titles: `Update: Application dependencies upgrades 🆙`
-- Dev dependency update PR titles: `Chore: Update application dev dependencies 🆙`
-- A master issue is created for each repo just for funesies and all Renovate PRs are
-  labeled with the `Renovate` label.
-- Updates for dependencies and devDependencies are separated in order to prevent
-  publishing new package versions for development+testing dependency updates.
-- Config `separateMajorMinor` is left `false` to provide higher visibility for updates
-  with major version bumps. It is also possible to delay a major version update if
-  necessary (eg when waiting for community Babel support).
-
-#### Schedule
-
-- Monday: Authoring tools (eg semantic-release-base, commitizen-base, prettier-base)
-- Tuesday: Development toolsets (eg webpack-base, svg-symbol-sprite-loader)
-- Wednesday: Prototypes (eg react-application-prototype)
-- Thursday: Projects (eg gitpush-f, hecka-rad)
-
-<!-- prettier-ignore-start -->
-[renovate.json]:https://github.com/crystal-ball/crystal-ball.github.io/blob/master/renovate.json
-[Renovate Docs](https://docs.renovatebot.com/)
-<!-- prettier-ignore-end -->
 
 # Semantic Release
 
@@ -502,12 +514,6 @@ automatically open an initial configuration PR after adding access for a reposit
 # Slack
 
 ...getting notifications in Slack channels by repo
-
-# Snyk
-
-Repository access for Snyk is configured in the [Github org third party access
-setting][app-access]. Vulnerabilities reporting and badge info is available in the
-[Snyk dashboard](https://app.snyk.io/org/crystal-ball/projects)
 
 # Zeit
 
