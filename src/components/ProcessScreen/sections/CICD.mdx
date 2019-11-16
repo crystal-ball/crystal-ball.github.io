@@ -1,0 +1,126 @@
+## CI/CD
+
+Continuous integration and delivery workflows are only possible by putting in place
+multiple high quality processes. Once in place they allow for truly fast, iterative
+work... aka the dream. The end goal of CI/CD is to be able to quickly ship small changes
+to production with confidence.
+
+- Include linting and unit test scripts in each package.json for automating code quality
+  checks.
+- Check for formatting and code quality by linting files during testing with a `test:lint`
+  package script that will check all module source files.
+
+  ```json
+  "scripts": {
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "NODE_ENV=test eslint --format=pretty src",
+    "test:unit": "jest src"
+  }
+  ```
+
+**Github actions**
+
+- Always use `npm ci` in CI/CD builds for apps/services to install from the package
+  lockfile.
+- Provide git commit info for Cypress+Percy: Because CI runs in Docker, on pull requests,
+  Cypress+Percy are unable to determine the git info for the merge commit being tested and
+  show _unknown_/`HEAD` as the branch. This is fixed by checking for a merging branch
+  commit SHA in the `github` workflow context. If it exists it's used to determine the
+  commit info for the test run, otherwise the Github Action workflow env variables contain
+  the correct info for master branch pushes.
+
+**[Code Climate](https://codeclimate.com/oss/dashboard)**
+
+- Adding a repo to the Code Coverage org will automatically provide maintainability
+  coverage 🎉
+- Setup code coverage reporting:
+
+  - Add a `CC_TEST_REPORTER_ID` Github secret `/settings/test_reporter/` Code Climate
+    dashboard.
+  - Output `lcov` code coverage reports from Jest
+  - Add setup and report steps to CI workflow to install and call the Code Climate
+    reporter.
+
+- When reporting coverage that was generated inside a Docker container include a
+  `--prefix` arg to the reporter matching the Docker workspace path. Eg if the tests ran
+  at `/usr/src/app` then the call to the reporter would need to be:
+
+  ```sh
+  cc-test-reporter format-coverage --prefix /usr/src/app
+  ```
+
+- In Code Climate dashboard's _Repo Settings_, _Exclude patterns_ add test files patterns
+  to exclude test files from code coverage totals:
+
+  ```
+  cypress/
+  **/*.spec.js
+  ```
+
+**Cypress**
+
+- Match the [React Application Prototype][react-prototype] Docker compose workflow to run
+  the application for Cypress to test against.
+  - Setup a `Dockerfile` to build and serve the app
+  - Setup a `cypress/Dockerfile` to run the Cypress+Percy test commands
+  - Setup `docker-compose{.ci}.yml` files to start and manage the app and test containers
+- Add a `CYPRESS_RECORD_KEY` and `--record` for reporting to the Cypress dashboard.
+
+**Percy**
+
+- Setup the Percy package and configurations:
+  - Install the dependency: `@percy/cypress`
+  - Setup the healthcheck in `cypress/plugins/index.js`
+  - Import command in `cypress/support/index.js`
+- Add a `PERCY_TOKEN` env variable to test envs for reporting:
+  - Get `PERCY_TOKEN` from Percy dashboard and add to CI/CD secrets
+- Add a Dockerfile to `cypress` dir to manage installing additional testing dependencies
+  for Cypress and overriding the run command to use Percy
+- Use [Percy environment variables][] to indicate which branch is being tested. _(See the
+  Github actions documentation for details on parsing out commit info during workflow
+  runs)_
+  - The Percy app isn't able to determine the branch for PRs or for Docker runs, Set a
+    `PERCY_BRANCH` environment variable to fix.
+- See the [Percy tutorials][] for example apps using Cypress and Storybook.
+
+**Semantic Release**
+
+- Install the `@crystal-ball/semantic-release-base` pacakge and include the `package.json`
+  configuration
+
+  ```json
+  "release": {
+    "extends": ["@crystal-ball/semantic-release-base"]
+  }
+  ```
+
+- Configure Github actions to run `npx semantic-release` for master builds with successful
+  test runs.
+
+**Zeit**
+
+- Match the [`now.json`][] configuration file maintained in the React Application
+  Prototype.
+  - The `build.env` variables increase npm install speed and limit console output.
+    _([Cypress - Skipping Installation][cypress-installs])_
+  - Include a route config for all resources to add a `cache-control` header for long term
+    caching of webpack hashed build assets. _([Zeit configuration -
+    headers][route-headers])_
+  4. Add a route config that rewrites all requests to `/` to support single page app
+     `index.html` resolution _([Zeit configuration - SPA Fallback][spa-fallback])_
+  - The `routes` configurations add caching headers to all static assets and reroute all
+    other requests to `index.html` for SPA routing.
+- Set the `package.json#engines` field to `10` to configure the static builder to use the
+  latest available version of Node.js. _([Static Build Project Node.js
+  Version][builder-node-version])_
+
+<!-- prettier-ignore-start -->
+[react-prototype]:https://github.com/crystal-ball/react-application-prototype
+[`now.json`]:https://github.com/crystal-ball/react-application-prototype/blob/master/now.json
+[builder-node-version]:https://zeit.co/docs/builders#official-builders/static-builds/static-build-project-node-js-version
+[cypress-installs]:https://docs.cypress.io/guides/getting-started/installing-cypress.html#Skipping-installation
+[route-headers]:https://zeit.co/docs/configuration/#routes/headers
+[spa-fallback]:https://zeit.co/docs/configuration/#routes/advanced/spa-fallback
+[Percy environment variables]:https://docs.percy.io/v1/docs/environment-variables
+[Percy tutorials]:https://docs.percy.io/docs/example-apps
+<!-- prettier-ignore-end -->
