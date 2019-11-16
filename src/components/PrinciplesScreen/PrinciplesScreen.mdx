@@ -1,8 +1,10 @@
 # Principles
 
-1. _Do less_ - Always strive for simplicity, even if it means duplicating some code until
-   the problem area is fully understood. There is nothing more expensive than the wrong
-   abstraction.
+1. _Do less_ - **Always strive for simplicity**, even if it means duplicating some code
+   until the problem area is fully understood. There is nothing more expensive than the
+   wrong abstraction. **[Ship small diffs][]** to production for faster and safer
+   deployments. Small changes are easier to review fast and easier to debug and roll back
+   on failure.
 1. _A best practice is best practice until there's a better practice._ Consistency makes
    writing code easier for everyone, but should never be held as dogma. When better
    solutions are found planning to introduce them as the new standard is required.
@@ -11,3 +13,14 @@
 
 1. _Explain why_ - Code is never fully self-explaining. Comments should explain why the
    semantically named code elements are being used the way they are.
+1. Continuously deliver small changes. CD is actually a successful combination of:
+   - Process encouraging and enabling small changes with feature flags. Small changes are
+     easier to review and faster to debug and rollback on failure
+   - Effective tests. Tests should inspire confidence that the code works. They are
+     resilient and not flaky. Applications should test in isolation and should assert that
+     if contract failures occur, they are gracefully handled and alerting is triggered.
+   - Useful alerting. In order to know that when a deployment fails, that it failed!
+
+<!-- prettier-ignore-start -->
+[Ship small diffs]:https://blog.skyliner.io/ship-small-diffs-741308bec0d1
+<!-- prettier-ignore-end -->

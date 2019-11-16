@@ -1,0 +1,41 @@
+## Repository management
+
+Github repository management includes using templates to automatically include community
+health files and optimizing repository issue and merge settings.
+
+**Github**
+
+- Consistently use labels for grouping issues across repositories by using the issue
+  labels script in `scripts/create-github-labels.js`
+- Declutter repository header tabs by disabling wikis and projects in the
+  _Settings.Options:Features_ settings. Documentation should be maintained in a `/docs`
+  directory and project management should use ZenHub releases and projects.
+- Keep a streamlined git history by disabling merge commits and rebase merging in the
+  _Settings.Options:Merge Button_ settings.
+- Keep branches cleaned up by enabling automatically deleting head branches in the
+  _Settings.Options:Merge Button_ settings.
+- Only define needed configuration files by using the shared issue and pull request
+  templates defined in the [.github][] template repository.
+- Provide details on how to contribute with a contributing guide in
+  `.github/contributing.md`. Include a guide in each repo so that additional notes can be
+  added for the design of that specific repository.
+- Support community health by including a copy of the Contributor Covenant code of conduct
+  in the repository root. _(Although it's possible to include a code of conduct in the
+  .github template repository, it should be included in each repo root for visibility
+  because it's important)_
+- Keep the project Readme focused on providing an overview of the project and workflows,
+  details can be documented in a guide.
+- Project guides or detailed code documentation should be kept in guides in the `docs`
+  dir.
+
+**Pull Panda**
+
+...notifications and reminders for when PRs are open 🚧
+
+**Slack**
+
+...getting notifications in Slack channels by repo 🚧
+
+<!-- prettier-ignore-start -->
+[.github]:https://github.com/crystal-ball/.github
+<!-- prettier-ignore-end -->
