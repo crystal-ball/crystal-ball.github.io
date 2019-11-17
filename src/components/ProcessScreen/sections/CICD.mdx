@@ -28,6 +28,41 @@ to production with confidence.
   commit SHA in the `github` workflow context. If it exists it's used to determine the
   commit info for the test run, otherwise the Github Action workflow env variables contain
   the correct info for master branch pushes.
+- Setup the CI/CD workflow to handle:
+
+  ```
+  name: CI/CD
+
+  on:
+    # Run jobs on every pull request
+    pull_request:
+      types: [opened, synchronize, reopened]
+    # Run jobs on pushes to master branch only
+    push:
+      branches:
+        - master
+
+  jobs:
+    # Include a job specifically for `skip ci` commits otherwise Github will mark the run
+    # as a failure
+    skip:
+      name: CI Skip
+      if: contains(github.event.head_commit.message, 'skip ci')
+      runs-on: ubuntu-latest
+      steps:
+        - name: Skip CI Commit
+          run: echo "Skip CI commit succes
+    # Run tests unless the commit message includes `skip ci`
+    test:
+      name: Continuous Integration
+      if: contains(github.event.head_commit.message, 'skip ci') == false
+    publish:
+      name: Continuous Deployment
+      # Only run the Semantic Release publish job if the test job passes
+      needs: test
+      # Only run on publish on master
+      if: github.ref == 'refs/heads/master'
+  ```
 
 **[Code Climate](https://codeclimate.com/oss/dashboard)**
 
@@ -95,7 +130,7 @@ to production with confidence.
   ```
 
 - Configure Github actions to run `npx semantic-release` for master builds with successful
-  test runs.
+  test runs. Use the `if` to skip publish commits.
 
 **Zeit**
 

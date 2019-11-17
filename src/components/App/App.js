@@ -9,8 +9,14 @@ export default function App() {
       <h1>The Order of the Crystal Code Wizards</h1>
 
       <em>
-        Resources for developing <bold>wonderful</bold> projects
+        Resources for developing <bold>wonderful</bold> projects.
       </em>
+
+      <p>
+        These guides provide reference for common problems and questions. They are a
+        resource for increasing velocity by automating solving problems that have already
+        been solved.
+      </p>
 
       <PrinciplesScreen />
       <ProcessScreen />
