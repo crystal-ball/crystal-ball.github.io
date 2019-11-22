@@ -2,6 +2,9 @@ import React from 'react'
 
 import PrinciplesScreen from '@/components/PrinciplesScreen/PrinciplesScreen.mdx'
 import ProcessScreen from '@/components/ProcessScreen/ProcessScreen.mdx'
+import NodePrototypeScreen from '@/components/NodePrototypeScreen/NodePrototypeScreen.mdx'
+import ReactPrototypeScreen from '@/components/ReactPrototypeScreen/ReactPrototypeScreen.mdx'
+import PackagesScreen from '@/components/PackagesScreen/PackagesScreen.mdx'
 
 export default function App() {
   return (
@@ -20,6 +23,13 @@ export default function App() {
 
       <PrinciplesScreen />
       <ProcessScreen />
+
+      <h1>Prototypes</h1>
+      <NodePrototypeScreen />
+      <ReactPrototypeScreen />
+
+      <h1>Packages</h1>
+      <PackagesScreen />
 
       <h2>Repositories</h2>
 
