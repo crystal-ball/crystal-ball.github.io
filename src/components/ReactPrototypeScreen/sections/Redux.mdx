@@ -1,0 +1,9 @@
+# Redux
+
+_Best practices for working with Redux_
+
+- Separate action constants to a separate file in dux slice so that they can be imported
+  into other slices without worrying about circular dependencies. Try to never use actions
+  or selectors in other slices and instead listen for appropriate action dispatches. Try to
+  get slices of state in components and then combine into a complex memoized selector for
+  fns that need state from multiple slices.
