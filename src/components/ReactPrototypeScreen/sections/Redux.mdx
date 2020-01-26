@@ -4,6 +4,59 @@ _Best practices for working with Redux_
 
 - Separate action constants to a separate file in dux slice so that they can be imported
   into other slices without worrying about circular dependencies. Try to never use actions
-  or selectors in other slices and instead listen for appropriate action dispatches. Try to
-  get slices of state in components and then combine into a complex memoized selector for
-  fns that need state from multiple slices.
+  or selectors in other slices and instead listen for appropriate action dispatches. Try
+  to get slices of state in components and then combine into a complex memoized selector
+  for fns that need state from multiple slices.
+
+## Naming conventions
+
+- Action types: Name as _nounVerb_, eg `LOCATION_UPDATED`, this encourages thinking of
+  actions as reports that can be listened to in any reducer, and responded to as
+  appropriate.
+- Action creators: Name as _verbNoun_, eg `updateLocation`, this helps provide context on
+  what an action is doing when it is dispatched.
+
+## Other conventions
+
+- Try to keep state types consistent, eg if it's defaulting a value to `''` makes sense
+  instead of `null`, that's great because the type doesn't change.
+- JSDoc type fields with what they _represent_, and if necessary, how they should be used.
+- Define action types as a separate module _always_ to make it easy to import them into
+  other slices without creating circular dependencies.
+
+Define: Redux as a state machine: With any reducer, what are the _finite_ states that can
+be modeled, and what are the legal _transitions_ between those states? Include this in the
+reducer to prevent bugs like transitioning from error directly to success...
+
+## Reducers as state machines
+
+Setup reducers to determine the next state based on the received event AND the current
+state of the slice:
+
+```javascript
+const initialState = {
+  status: 'idle' // Finite state being one of 'idle', 'loading', 'sucess',
+  packages: []
+}
+
+function idleReducer(state, action) {
+  // ... Handle transitions that can occur when idle
+}
+
+function loadingReducer(state, action) {
+  // ... Handle transitions that can occur when loading
+}
+
+export default function reducer (state= initialState, action) {
+  switch(state.status) {
+    case 'idle': {
+      return idleReducer(state, action)
+    }
+    case 'loading': {
+      return loadingReducer(state,action)
+    }
+
+    // ... etc. for each of the finite states possible in this reducer
+  }
+}
+```

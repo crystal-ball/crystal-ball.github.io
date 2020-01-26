@@ -20,6 +20,9 @@
      resilient and not flaky. Applications should test in isolation and should assert that
      if contract failures occur, they are gracefully handled and alerting is triggered.
    - Useful alerting. In order to know that when a deployment fails, that it failed!
+1. _Understand and craft appropriate boundaries_ - Seperate business logic into unit
+   testable fns, eg separate logic from thunks event flow management so that thunks can be
+   tested asynchronously and app logic can be tested synchronously.
 
 ## Application architecture Principles
 
@@ -28,6 +31,9 @@
 ## Effective testing principles
 
 <!-- Notes on writing effective, stable tests -->
+
+- Focus unit testing on pure fns to maximize code coverage without introducing complex
+  setup and mocking test code that needs to be maintained.
 
 <!-- prettier-ignore-start -->
 [Ship small diffs]:https://blog.skyliner.io/ship-small-diffs-741308bec0d1
