@@ -36,23 +36,21 @@ const createHeaders = token => ({
   Accept: 'application/vnd.github.symmetra-preview+json',
 })
 
-const createLabel = (label, { token, owner, repo }) => {
+const createLabel = (label, { token, owner, repo }) =>
   fetch(`https://api.github.com/repos/${owner}/${repo}/labels`, {
     method: 'POST',
     headers: createHeaders(token),
     body: JSON.stringify(label),
   })
-}
 
-const updateLabel = (label, { token, owner, repo }) => {
+const updateLabel = (label, { token, owner, repo }) =>
   fetch(`https://api.github.com/repos/${owner}/${repo}/labels/${label.name}`, {
     method: 'PATCH',
     headers: createHeaders(token),
     body: JSON.stringify(label),
   })
-}
 
-const deleteLabel = (label, { token, owner, repo }) => {
+const deleteLabel = (label, { token, owner, repo }) =>
   fetch(`https://api.github.com/repos/${owner}/${repo}/labels/${label}`, {
     method: 'DELETE',
     headers: createHeaders(token),
@@ -61,7 +59,6 @@ const deleteLabel = (label, { token, owner, repo }) => {
       if (!res.ok) throw new Error(`Delete for label ${label} failed`)
     })
     .catch(err => console.warn(err))
-}
 
 /**
  * Fetch the current set of labels for a repo

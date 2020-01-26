@@ -24,6 +24,16 @@
    testable fns, eg separate logic from thunks event flow management so that thunks can be
    tested asynchronously and app logic can be tested synchronously.
 
+## Standards and conventions
+
+Standards should be enforced with tools, eg ESLint or Jest coverage thresholds.
+Conventions should be preferred, with documented motivations.
+
+Enforcing standards automatically makes the entire team more effective by getting code to
+the expected level faster, eliminating inconsequential nitpicking from code reviews, and
+setting the expectation that code review comments should focus on how the solutions of
+some change could potentially be improved, or trade-offs to consider.
+
 ## Application architecture Principles
 
 <!-- Notes on architecture principles -->
@@ -34,7 +44,29 @@
 
 - Focus unit testing on pure fns to maximize code coverage without introducing complex
   setup and mocking test code that needs to be maintained.
+- Set unit testing coverage standards for critical application logic, eg Redux or models
+
+  ```javascript
+  // Require unit test coverage for Redux logic
+  coverageThreshold: {
+    'src/dux': {
+      branches: 95,
+      functions: 95,
+      statements: 95,
+    },
+  },
+  ```
 
 <!-- prettier-ignore-start -->
 [Ship small diffs]:https://blog.skyliner.io/ship-small-diffs-741308bec0d1
 <!-- prettier-ignore-end -->
+
+<!-- Unedited
+
+Best practice is best practice until there’s a better practice: !Best practices should be driven by motivation! having motivation for doing things allows finding better motivations and allows the codebase to evolve. Recognizing that nothing is perfect, nothing is forever, there is value in saying, “this is the current best”, knowing that you may circle back later and find a better best. Drawing that line lets you align and move forward as a group while allowing room for growth. RFCs are a great way to open the floor for proposals to standards.
+
+Emojis make great context communicators: coding is about communicating ideas, having fun, using emojis to bring fun into repo A codebase isn’t just a set of instructions, it is an expression of ideas, an expression of creation that is shared and must be understood by the entire team. Intent is just as important as effect in communicating in the codebase, and understanding and respecting different viewpoints is critical to creating a cohesive, effective codebase. Strive to effectively communicate the _what_ within the code, communicate the _context_, the _why_ in documentation (guides, comments, etc.)
+
+Be conservative in what you use, be liberal in what you learn
+
+-->
