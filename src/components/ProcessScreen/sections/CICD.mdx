@@ -20,21 +20,56 @@ to production with confidence.
 
 **Github actions**
 
+1. Packages should have checks for:
+
+- Github action
+- Code Climate (maintainability check)
+- LGTM
+- Snyk
+
+2. Applications should have checks for:
+
+- Github action
+- Code Climate (maintainability check)
+- LGTM
+- Snyk
+- Zeit
+- Cypress
+- Percy
+
 - Always use `npm ci` in CI/CD builds for apps/services to install from the package
   lockfile.
-- Provide git commit info for Cypress+Percy: Because CI runs in Docker, on pull requests,
-  Cypress+Percy are unable to determine the git info for the merge commit being tested and
-  show _unknown_/`HEAD` as the branch. This is fixed by checking for a merging branch
-  commit SHA in the `github` workflow context. If it exists it's used to determine the
-  commit info for the test run, otherwise the Github Action workflow env variables contain
-  the correct info for master branch pushes.
-- Setup the CI/CD workflow to handle:
+- The workflows for parsing out git/github info is still being stabilized. Due to running
+  Github actions on pull requests, as well as spotty Gihub actions support, as well as
+  Docker complications, it is sometimes required to explicitly set environment variables
+  for tools. Easiest solution for this so far is to set environment variables to the _Pull
+  Request_ branch and SHA info. Then in the step, set to fallbacks for runs on master:
 
+  ```yaml
+  - name: Code Climate - Report
+    if: success()
+    run: |
+      # If this is a PR then GIT_BRANCH will be used, otherwise we pull `master` out of GITHUB_REF
+      export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
+      ./cc-test-reporter after-build --prefix /usr/src/app
+    env:
+      # Setting the commit SHA will work on PRS and will point the test to the commit SHA
+      # instead of the PR SHA
+      GIT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+      GIT_BRANCH: ${{ github.head_ref }}
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
   ```
+
+- [Code Climate environment variables](https://docs.codeclimate.com/docs/github-actions-test-coverage)
+- [Cypress environment variables](https://docs.cypress.io/guides/guides/continuous-integration.html#Git-information)
+- [Percy environment variables](https://docs.percy.io/docs/environment-variables)
+- Structure of a CI/CD workflow to run on every pull request, and every push to master.
+
+  ```yaml
   name: CI/CD
 
   on:
-    # Run jobs on every pull request
+    # Run jobs on every pull request and pull request update
     pull_request:
       types: [opened, synchronize, reopened]
     # Run jobs on pushes to master branch only
@@ -44,7 +79,7 @@ to production with confidence.
 
   jobs:
     # Include a job specifically for `skip ci` commits otherwise Github will mark the run
-    # as a failure
+    # as a failure, this is needed for packages using Semantic Release
     skip:
       name: CI Skip
       if: contains(github.event.head_commit.message, 'skip ci')
@@ -52,44 +87,105 @@ to production with confidence.
       steps:
         - name: Skip CI Commit
           run: echo "Skip CI commit succes
-    # Run tests unless the commit message includes `skip ci`
+
+    # Run tests for all events (unless the commit message includes `skip ci`)
     test:
       name: Continuous Integration
       if: contains(github.event.head_commit.message, 'skip ci') == false
+
+    # Run deployments/publishing only on push to master and only if the tests passed
     publish:
       name: Continuous Deployment
-      # Only run the Semantic Release publish job if the test job passes
       needs: test
-      # Only run on publish on master
       if: github.ref == 'refs/heads/master'
   ```
 
-**[Code Climate](https://codeclimate.com/oss/dashboard)**
+### [Code Climate](https://codeclimate.com/oss/dashboard)
 
-- Adding a repo to the Code Coverage org will automatically provide maintainability
-  coverage 🎉
-- Setup code coverage reporting:
+_Code Climate provides reporting on some general code quality checks, and code coverage_
 
-  - Add a `CC_TEST_REPORTER_ID` Github secret `/settings/test_reporter/` Code Climate
-    dashboard.
-  - Output `lcov` code coverage reports from Jest
-  - Add setup and report steps to CI workflow to install and call the Code Climate
-    reporter.
+1. Code Climate will run a check on PRs and report on code maintainability issues, eg
+   duplicated code.
+1. After tests run CC will then add inline comments and a summary comment to the PR.
 
-- When reporting coverage that was generated inside a Docker container include a
-  `--prefix` arg to the reporter matching the Docker workspace path. Eg if the tests ran
-  at `/usr/src/app` then the call to the reporter would need to be:
+**Code Climate setup**
 
-  ```sh
-  cc-test-reporter format-coverage --prefix /usr/src/app
-  ```
-
-- In Code Climate dashboard's _Repo Settings_, _Exclude patterns_ add test files patterns
-  to exclude test files from code coverage totals:
+- Add the repo to the Code Coverage org, CC will automatically provide maintainability
+  checks 🎉
+- In _Repo Settings -> Test coverage_ uncheck enforce diff and enforce code coverage. Code
+  coverage levels should be enforced with Jest configs. The Code Coverage integration
+  provides additional information, but should not be a critical path in reviews. The Code
+  CClimate
+- In _Repo Settings -> Github_:
+  1. Enable PR Summary comments with 'Delete outdated comments and post a new one'
+  1. Enable Inline issue comments, max of 5, with 'Post additional inline comments on new
+     issues'
+  1. Enable PR status updates
+  1. SAVE!
+- In _Repo Settings -> Exclude patterns_ add test files patterns to exclude test files
+  from code coverage totals:
 
   ```
   cypress/
   **/*.spec.js
+  ```
+
+**Repo Setup**
+
+- Add a `.codeclimate.yml` to the repo for fine tuning maintainability checks:
+  1. `method-lines` should be 125 in React projects to account for function components,
+     and 75 in Node projects. (Default is 25 lines! So short!!)
+
+* When a repo has a `.codeclimate.yml` configuration file, then the file exclusions for
+  maintainability checks need to be included as `exclude_patterns` in that config, any
+  exclusions entered in the CC dashboard won't be applied!
+
+```yml
+# https://docs.codeclimate.com/docs/advanced-configuration#section-default-check-configurations
+version: '2'
+checks:
+  # Allow 75 lines in functions
+  method-lines:
+    config:
+      threshold: 75
+exclude_patterns:
+  - 'cypress/'
+  - '**/*.spec.js'
+```
+
+**Test coverage setup**
+
+- In _Repo Settings -> Test coverage_ copy the **Test Reporter ID** and add it to the
+  Github repo secrets as `CC_TEST_REPORTER_ID`
+- Add `lcov` to `jest.config.js:coverageReporters` to output LCOV reports (these reports
+  are sent to CC by the CC reporter)
+- Add setup and reporting steps to CI workflow to send coverage results:
+
+  ```yaml
+  steps
+    - name: Code Climate - Setup
+      # Install the Code Climate reporter in workspace
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+
+    - name: Code Climate - Report
+      if: success()
+      # Upload test code coverage report to Code Climate (branch must be explicitly set)
+      run: |
+        export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
+        ./cc-test-reporter after-build
+  ```
+
+  _(See the Github actions section for details on git environment variables)_
+
+- When reporting coverage that was generated inside a Docker container include a
+  `--prefix` arg to the reporter matching the Docker workspace path. Eg if the tests ran
+  at `/usr/src/app` then the call to the reporter should be:
+
+  ```sh
+  ./cc-test-reporter format-coverage --prefix /usr/src/app
   ```
 
 **Cypress**
@@ -100,6 +196,16 @@ to production with confidence.
   - Setup a `cypress/Dockerfile` to run the Cypress+Percy test commands
   - Setup `docker-compose{.ci}.yml` files to start and manage the app and test containers
 - Add a `CYPRESS_RECORD_KEY` and `--record` for reporting to the Cypress dashboard.
+
+- CYPRESS CODE COVERAGE:
+  https://docs.cypress.io/guides/tooling/code-coverage.html#Introduction
+
+Cypress Github app settings:
+
+- One check per run group
+- PR comments enabled
+- Include screenshots
+-
 
 **Percy**
 
