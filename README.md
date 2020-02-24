@@ -77,26 +77,37 @@
 - [`react-application-prototype`][]
 - [`node-service-prototype`][]
 
-## Packages
-
-- [`componentry`][]
-- [`cssup`][]
-- [`svg-symbol-sprite-loader`][]
-
 ## Base packages
 
+- [`babel-base`][]
 - [`commitizen-base`][]
 - [`eslint-config-eloquence`][]
 - [`prettier-base`][]
 - [`semantic-release-base`][]
 - [`webpack-base`][]
 
+## Packages
+
+- [`babel-plugin-transform-import-aliases`][]
+- [`componentry`][]
+- [`cssup`][]
+- [`dux-routing`][]
+- [`svg-symbol-sprite-loader`][]
+
+## Applications
+
+- [`componentry-dot-design`][]
+
 <!-- Links -->
 
 <!-- prettier-ignore-start -->
+[`babel-base`]:https://github.com/crystal-ball/babel-base
+[`babel-plugin-transform-import-aliases`]:https://github.com/crystal-ball/babel-plugin-transform-import-aliases
 [`commitizen-base`]:https://github.com/crystal-ball/commit-base
 [`componentry`]:https://github.com/crystal-ball/componentry
+[`componentry-dot-design`]:https://github.com/crystal-ball/componentry-dot-design
 [`cssup`]:https://github.com/crystal-ball/cssup
+[`dux-routing`]:https://github.com/crystal-ball/dux-routing
 [`eslint-config-eloquence`]:https://github.com/crystal-ball/eslint-config-eloquence
 [`node-service-prototype`]:https://github.com/crystal-ball/node-service-prototype
 [`prettier-base`]:https://github.com/crystal-ball/prettier-base
