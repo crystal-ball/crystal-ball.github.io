@@ -72,19 +72,14 @@
   <br />
 </div>
 
+## Applications
+
+- [`componentry-dot-design`][]
+
 ## Prototypes
 
 - [`react-application-prototype`][]
 - [`node-service-prototype`][]
-
-## Base packages
-
-- [`babel-base`][]
-- [`commitizen-base`][]
-- [`eslint-config-eloquence`][]
-- [`prettier-base`][]
-- [`semantic-release-base`][]
-- [`webpack-base`][]
 
 ## Packages
 
@@ -94,9 +89,14 @@
 - [`dux-routing`][]
 - [`svg-symbol-sprite-loader`][]
 
-## Applications
+## Base packages
 
-- [`componentry-dot-design`][]
+- [`babel-base`][]
+- [`commitizen-base`][]
+- [`eslint-config-eloquence`][]
+- [`prettier-base`][]
+- [`semantic-release-base`][]
+- [`webpack-base`][]
 
 <!-- Links -->
 
