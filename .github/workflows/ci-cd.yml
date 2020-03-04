@@ -28,5 +28,5 @@ jobs:
           export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
           ./cc-test-reporter after-build
         env:
-          GIT_BRANCH: ${{ github.head_ref }}
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          GIT_BRANCH: ${{ github.head_ref }}
