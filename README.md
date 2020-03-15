@@ -58,7 +58,7 @@
   <a href="https://github.com/crystal-ball">
     <img src="https://img.shields.io/badge/%F0%9F%94%AE%E2%9C%A8-contains_magic-D831D7.svg" alt="Contains magic" valign="text-top" />
   </a>
-  <a href="https://github.com/crystal-ball/crystal-ball.github.io">
+  <a href="https://github.com/crystal-ball/crystal-ball.github.io" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/%F0%9F%92%96%F0%9F%8C%88-full_of_love-F5499E.svg" alt="Full of love" valign="text-top" />
   </a>
   <code>:flair&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>
