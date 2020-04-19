@@ -31,7 +31,7 @@ const projectLabels = [
   { name: 'Type: Wontfix', color: 'e6e6e6' },
 ]
 
-const createHeaders = token => ({
+const createHeaders = (token) => ({
   Authorization: `Basic ${Buffer.from(`${token}:x-oauth-basic`).toString('base64')}`,
   Accept: 'application/vnd.github.symmetra-preview+json',
 })
@@ -55,10 +55,10 @@ const deleteLabel = (label, { token, owner, repo }) =>
     method: 'DELETE',
     headers: createHeaders(token),
   })
-    .then(res => {
+    .then((res) => {
       if (!res.ok) throw new Error(`Delete for label ${label} failed`)
     })
-    .catch(err => console.warn(err))
+    .catch((err) => console.warn(err))
 
 /**
  * Fetch the current set of labels for a repo
@@ -66,7 +66,7 @@ const deleteLabel = (label, { token, owner, repo }) =>
 const fetchCurrentLabels = ({ token, owner, repo }) =>
   fetch(`https://api.github.com/repos/${owner}/${repo}/labels`, {
     headers: createHeaders(token),
-  }).then(res => res.json())
+  }).then((res) => res.json())
 
 /**
  * Prompt for each currenlty existing label if it doesn't match the default set
@@ -111,9 +111,9 @@ const createOrgLabels = async (existingLabels, auth) => {
   const exists = (a, b) => a.name === b.name
 
   for (const projectLabel of projectLabels) {
-    if (existingLabels.find(label => matches(label, projectLabel))) {
+    if (existingLabels.find((label) => matches(label, projectLabel))) {
       // Project label already exists, do nothing
-    } else if (existingLabels.find(label => exists(label, projectLabel))) {
+    } else if (existingLabels.find((label) => exists(label, projectLabel))) {
       // Project label exists, but needs to be updated (wait for update before
       // moving on to next label)
       /* eslint-disable-next-line no-await-in-loop */

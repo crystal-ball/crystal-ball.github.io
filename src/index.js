@@ -15,7 +15,7 @@ svgSymbolSpriteLoader({ useCache: NODE_ENV === 'production' })
 
 // Configure components that will be used to render elements parsed out by MDX
 const components = {
-  pre: props => <div {...props} />,
+  pre: (props) => <div {...props} />,
 }
 
 // Start the party 🎉

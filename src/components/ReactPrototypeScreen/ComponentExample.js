@@ -27,7 +27,7 @@ export default function HeckaRad({ engageRad, radLevels }) {
   // --- Handlers -----------------------------------------
 
   const handleRadnessUpdate = useCallback(
-    newRadness => {
+    (newRadness) => {
       setRad(newRadness)
       engageRad(newRadness)
     },
