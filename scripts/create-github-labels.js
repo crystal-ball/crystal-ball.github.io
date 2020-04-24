@@ -23,7 +23,7 @@ const projectLabels = [
   { name: 'Type: Feature', color: '325D88' },
   { name: 'Type: Fix', color: '5b6163' },
   {
-    name: 'Type: Infra',
+    name: 'Type: Infrastructure',
     color: 'bae6d9',
     description: 'Infrastructure setup and changes',
   },
