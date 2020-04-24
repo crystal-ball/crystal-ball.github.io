@@ -22,11 +22,20 @@ const projectLabels = [
   { name: 'Type: Enhancement', color: '325D88' },
   { name: 'Type: Feature', color: '325D88' },
   { name: 'Type: Fix', color: '5b6163' },
+  {
+    name: 'Type: Infra',
+    color: 'bae6d9',
+    description: 'Infrastructure setup and changes',
+  },
   { name: 'Type: Invalid', color: 'e6e6e6' },
   { name: 'Type: Question', color: '29ABE0' },
   { name: 'Type: Refactor', color: '5b6163' },
-  { name: 'Type: RFC', color: '29ABE0' },
-  { name: 'Type: Spike', description: 'Timeboxed exploration', color: 'bae6d9' },
+  {
+    name: 'Type: RFC',
+    color: '29ABE0',
+    description: 'A proposal or discussion needing comments',
+  },
+  { name: 'Type: Spike', color: 'bae6d9', description: 'Timeboxed issue exploration' },
   { name: 'Type: Test', color: '325D88' },
   { name: 'Type: Wontfix', color: 'e6e6e6' },
 ]
