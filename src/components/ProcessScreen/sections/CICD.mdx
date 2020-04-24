@@ -112,23 +112,20 @@ _Code Climate provides reporting on some general code quality checks, and code c
 
 - Add the repo to the Code Coverage org, CC will automatically provide maintainability
   checks 🎉
-- In _Repo Settings -> Test coverage_ uncheck enforce diff and enforce code coverage. Code
-  coverage levels should be enforced with Jest configs. The Code Coverage integration
-  provides additional information, but should not be a critical path in reviews. The Code
-  CClimate
 - In _Repo Settings -> Github_:
   1. Enable PR Summary comments with 'Delete outdated comments and post a new one'
   1. Enable Inline issue comments, max of 5, with 'Post additional inline comments on new
      issues'
   1. Enable PR status updates
   1. SAVE!
-- In _Repo Settings -> Exclude patterns_ add test files patterns to exclude test files
-  from code coverage totals:
+- In _Repo Settings -> Test coverage_
+  1. Uncheck enforce diff coverage.
+  2. Check enforce total coverage.
 
-  ```
-  cypress/
-  **/*.spec.js
-  ```
+```
+cypress/
+**/*.spec.js
+```
 
 **Repo Setup**
 
@@ -176,6 +173,9 @@ exclude_patterns:
       run: |
         export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
         ./cc-test-reporter after-build
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        GIT_BRANCH: ${{ github.head_ref }}
   ```
 
   _(See the Github actions section for details on git environment variables)_

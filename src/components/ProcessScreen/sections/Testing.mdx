@@ -1,0 +1,15 @@
+## Testing
+
+### Linting
+
+All repos should lint for code quality with ESLint using `eslint-config-eloquence`, which
+will lint for code formatting using Prettier.
+
+```json
+{
+  "scripts": {
+    "test:lint": "NODE_ENV=test eslint --format=pretty scripts scripts src",
+    "format": "prettier --write '*.{js,json,md,ts}' '**/*.{js,json,md,mdx,scss,ts}' !CHANGELOG.md"
+  }
+}
+```
