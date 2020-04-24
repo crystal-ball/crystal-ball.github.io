@@ -13,7 +13,7 @@ to production with confidence.
   ```json
   "scripts": {
     "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "NODE_ENV=test eslint --format=pretty src",
+    "test:lint": "NODE_ENV=test eslint --format=pretty --ext .js,.ts src",
     "test:unit": "jest src"
   }
   ```
@@ -53,11 +53,8 @@ to production with confidence.
       export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
       ./cc-test-reporter after-build --prefix /usr/src/app
     env:
-      # Setting the commit SHA will work on PRS and will point the test to the commit SHA
-      # instead of the PR SHA
-      GIT_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-      GIT_BRANCH: ${{ github.head_ref }}
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      GIT_BRANCH: ${{ github.head_ref }}
   ```
 
 - [Code Climate environment variables](https://docs.codeclimate.com/docs/github-actions-test-coverage)
@@ -67,27 +64,9 @@ to production with confidence.
 
   ```yaml
   name: CI/CD
-
-  on:
-    # Run jobs on every pull request and pull request update
-    pull_request:
-      types: [opened, synchronize, reopened]
-    # Run jobs on pushes to master branch only
-    push:
-      branches:
-        - master
+  on: [push]
 
   jobs:
-    # Include a job specifically for `skip ci` commits otherwise Github will mark the run
-    # as a failure, this is needed for packages using Semantic Release
-    skip:
-      name: CI Skip
-      if: contains(github.event.head_commit.message, 'skip ci')
-      runs-on: ubuntu-latest
-      steps:
-        - name: Skip CI Commit
-          run: echo "Skip CI commit succes
-
     # Run tests for all events (unless the commit message includes `skip ci`)
     test:
       name: Continuous Integration
@@ -160,16 +139,15 @@ exclude_patterns:
 
   ```yaml
   steps
+    # Install the Code Climate reporter in workspace
     - name: Code Climate - Setup
-      # Install the Code Climate reporter in workspace
       run: |
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
-
+    # Upload test code coverage report to Code Climate (branch must be explicitly set)
     - name: Code Climate - Report
       if: success()
-      # Upload test code coverage report to Code Climate (branch must be explicitly set)
       run: |
         export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
         ./cc-test-reporter after-build
