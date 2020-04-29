@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/runtime": "7.9.2",
     "@emotion/core": "10.0.28",
-    "@mdx-js/react": "1.5.8",
+    "@mdx-js/react": "1.6.0",
     "classnames": "2.2.6",
     "core-js": "3.6.5",
     "emotion-theming": "10.0.27",
