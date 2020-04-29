@@ -24,11 +24,12 @@ vulnerabilities.
 - Repository access for the Renovate Github app is configured in the [Github org installed
   apps settings][installed-apps]. After a repo is added to Renovate it will open a
   configuration setup PR.
-- Renovate configurations should match the [Renovate configuration][renovate.json]
-  maintained in this repository.
-  - The `commitMessageTopic` should be customized to either `application`, `service` or
-    `package` depending on the repository.
-  - The `schedule` should be set to match the repository type.
+- The [renovate-base][] repository has presets for libraries and projects.
+- The `commitMessageTopic` is customized to either `project`, or `library` depending on
+  the repository.
+- A single `schedule` is used for _project_ repositories because updating them is usually
+  more work. For _library_ repositories devDependencies are set to update always, with
+  dependency updates and package publishing on a once per week schedule.
 - A master issue is created for each repo just for funesies and all Renovate PRs are
   labeled with the `Renovate` label.
 - Updates for dependencies and devDependencies are separated in order to prevent
@@ -39,11 +40,10 @@ vulnerabilities.
 - Package dependency resolution happens at build time by not including lock files. This is
   meant to provide more realistic testing during CI/CD by mirroring how the package
   dependencies will be resolved when installed by a consumer.
-- Updates are rolled upstream through the week by updating on a rolling schedule:
-  - Monday: Authoring tools (eg semantic-release-base, commitizen-base, prettier-base)
-  - Tuesday: Development toolsets (eg webpack-base, svg-symbol-sprite-loader)
-  - Wednesday: Prototypes (eg react-application-prototype)
-  - Thursday: Projects (eg gitpush-f, hecka-rad)
+- Library updates are made on Mondays
+- Project updates are made on Wednesdays
+
+[renovate-base]: https://github.com/crystal-ball/renovate-base
 
 **Snyk**
 
