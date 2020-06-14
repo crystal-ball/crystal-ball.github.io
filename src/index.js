@@ -4,7 +4,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { ThemeProvider as EmotionTheme } from 'emotion-theming'
 import svgSymbolSpriteLoader from 'svg-symbol-sprite-loader'
 
-import './utils/require-icons'
+import './utils/require-icons' // eslint-disable-line import/no-unassigned-import -- Side effect: icons
 
 import App from './components/App/App'
 import { NODE_ENV } from './config/environment'
