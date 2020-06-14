@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { MDXProvider } from '@mdx-js/react'
-import { ThemeProvider as EmotionTheme } from 'emotion-theming'
 import svgSymbolSpriteLoader from 'svg-symbol-sprite-loader'
 
 import './utils/require-icons' // eslint-disable-line import/no-unassigned-import -- Side effect: icons
@@ -22,11 +21,9 @@ const components = {
 // Render all of the root application providers then application root component
 render(
   <React.StrictMode>
-    <EmotionTheme theme={{}}>
-      <MDXProvider components={components}>
-        <App />
-      </MDXProvider>
-    </EmotionTheme>
+    <MDXProvider components={components}>
+      <App />
+    </MDXProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )

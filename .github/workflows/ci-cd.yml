@@ -20,13 +20,13 @@ jobs:
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
       - name: Test
-        run: npm test
+        run: npm run test:lint
       # Upload test code coverage report to Code Climate (branch must be explicitly set)
-      - name: Code Climate - Report
-        if: success()
-        run: |
-          export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
-          ./cc-test-reporter after-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-          GIT_BRANCH: ${{ github.head_ref }}
+      # - name: Code Climate - Report
+      #   if: success()
+      #   run: |
+      #     export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
+      #     ./cc-test-reporter after-build
+      #   env:
+      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      #     GIT_BRANCH: ${{ github.head_ref }}
