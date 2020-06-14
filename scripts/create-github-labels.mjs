@@ -1,9 +1,8 @@
+/* global Buffer */
 /* eslint-disable no-console */
 
-'use strict'
-
-const inquirer = require('inquirer')
-const fetch = require('node-fetch')
+import inquirer from 'inquirer'
+import fetch from 'node-fetch'
 
 const projectLabels = [
   { name: 'Breaking Changes', color: 'ff3b8c' },
