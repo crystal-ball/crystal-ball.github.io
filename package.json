@@ -43,7 +43,7 @@
     "@crystal-ball/prettier-base": "2.2.0",
     "@crystal-ball/webpack-base": "9.8.0",
     "@types/jest": "26.0.4",
-    "eslint-config-eloquence": "14.6.0",
+    "eslint-config-eloquence": "14.7.0",
     "husky": "4.2.5",
     "jest": "26.1.0"
   },
