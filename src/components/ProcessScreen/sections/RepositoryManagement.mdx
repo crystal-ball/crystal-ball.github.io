@@ -32,19 +32,30 @@ health files and optimizing repository issue and merge settings.
 
 1. Add new repositories to a ZenHub board
 
-**Pull Panda**
-
-...notifications and reminders for when PRs are open 🚧
-
 **Slack**
 
-Create a Slack channel for each repository and subsribe to:
+Create a Slack channel for each repository and subsribe to deployments and releases.
+
+- Reminders for open PRs are posted in #reminders and configured as a Github 'Scheduled
+  Reminder' in the CBC org settings:
+  https://github.com/organizations/crystal-ball/settings/reminders
+- Personal notifications are posted in the Github app channel as a Github 'Scheduled
+  Reminder' configured for personal account:
+  https://github.com/settings/reminders/crystal-ball
 
 ...getting notifications in Slack channels by repo 🚧
 
 - [Github][github slack app] with `/github subscribe crystal-ball/repo-name`
 
 * [Github Slack app](https://slack.github.com/)
+
+### Github for Slack
+
+- Bot won't work for private repositories until you sign in with `/github signin`
+- CBC whitelists which repos Slack can access:
+  (https://github.com/organizations/crystal-ball/settings/installations)
+- Subscribe to: Deployments and Releases:
+  `/github subscribe crystal-ball/<REPO> deployments releases`
 
 <!-- prettier-ignore-start -->
 [.github]:https://github.com/crystal-ball/.github

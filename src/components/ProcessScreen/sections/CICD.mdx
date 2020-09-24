@@ -99,7 +99,12 @@ _Code Climate provides reporting on some general code quality checks, and code c
   1. SAVE!
 - In _Repo Settings -> Test coverage_
   1. Uncheck enforce diff coverage.
-  2. Check enforce total coverage.
+  2. Uncheck enforce total coverage.
+
+_ℹ️ Having PR checks for diff coverage and total coverage is just a little too irritating.
+Not every PR is going to have tests, and sometimes total coverage goes down a little bit
+which causes a PR check failure that's irritating. INSTEAD -> set minimum coverage
+thresholds in Jest with some wiggle room to keep overall coverage at sensible minimums._
 
 ```
 cypress/
