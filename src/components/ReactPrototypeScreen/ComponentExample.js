@@ -1,7 +1,7 @@
 /* eslint-disable */
 function RadnessUpdater() {}
 
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { func, object } from 'prop-types'
 

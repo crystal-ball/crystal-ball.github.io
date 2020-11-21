@@ -1,5 +1,3 @@
-import React from 'react'
-
 import PrinciplesScreen from '@/components/PrinciplesScreen/PrinciplesScreen.mdx'
 import ProcessScreen from '@/components/ProcessScreen/ProcessScreen.mdx'
 import NodePrototypeScreen from '@/components/NodePrototypeScreen/NodePrototypeScreen.mdx'

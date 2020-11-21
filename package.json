@@ -15,39 +15,38 @@
     "url": "https://github.com/crystal-ball/crystal-ball.github.io.git"
   },
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --mode=development",
+    "start": "NODE_ENV=development webpack serve --mode=development",
     "start:docker": "NODE_ENV=development webpack-dev-server --host=0.0.0.0 --mode=development",
     "build": "NODE_ENV=production webpack --mode=production",
+    "test": "npm run test:lint && npm run test:unit",
     "test:lint": "NODE_ENV=test eslint --format=pretty . --ignore-pattern 'src/vendor.js'",
     "test:unit": "jest scripts",
     "create-github-labels": "node ./scripts/create-github-labels.mjs",
     "format": "prettier --write . !coverage"
   },
   "dependencies": {
-    "@babel/runtime": "7.11.2",
-    "@mdx-js/react": "1.6.18",
+    "@babel/runtime": "7.12.5",
+    "@mdx-js/react": "1.6.21",
     "classnames": "2.2.6",
-    "core-js": "3.6.5",
+    "core-js": "3.7.0",
     "feather-icons": "4.28.0",
     "inquirer": "7.3.3",
     "node-fetch": "2.6.1",
     "prop-types": "15.7.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-hot-loader": "4.13.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "svg-symbol-sprite-loader": "5.0.0"
   },
   "devDependencies": {
-    "@crystal-ball/babel-base": "2.0.0",
-    "@crystal-ball/commitizen-base": "2.8.0",
+    "@crystal-ball/babel-base": "3.0.0",
+    "@crystal-ball/commitizen-base": "2.9.0",
     "@crystal-ball/prettier-base": "2.4.0",
     "@crystal-ball/webpack-base": "10.0.0",
-    "@types/jest": "26.0.14",
-    "eslint-config-eloquence": "16.3.1",
+    "@types/jest": "26.0.15",
+    "eslint-config-eloquence": "16.7.1",
     "husky": "4.3.0",
-    "jest": "26.5.3"
+    "jest": "26.6.3"
   },
-  "prettier": "@crystal-ball/prettier-base",
   "config": {
     "commitizen": {
       "path": "@crystal-ball/commitizen-base"
