@@ -1,9 +1,9 @@
-import React from 'react'
+import { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { MDXProvider } from '@mdx-js/react'
 import svgSymbolSpriteLoader from 'svg-symbol-sprite-loader'
 
-import './utils/require-icons' // eslint-disable-line import/no-unassigned-import -- Side effect: icons
+import './utils/require-icons'
 
 import App from './components/App/App'
 import { NODE_ENV } from './config/environment'
@@ -20,10 +20,10 @@ const components = {
 // Start the party 🎉
 // Render all of the root application providers then application root component
 render(
-  <React.StrictMode>
+  <StrictMode>
     <MDXProvider components={components}>
       <App />
     </MDXProvider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root'),
 )

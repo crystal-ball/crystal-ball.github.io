@@ -1,5 +1,4 @@
 /* global require */
-/* eslint-disable import/no-unassigned-import */
 
 // Feather icons imports (only icons used in application are imported to keep
 // sprite size down)
