@@ -43,6 +43,21 @@ vulnerabilities.
 - Library updates are made on Mondays
 - Project updates are made on Wednesdays
 
+Disable Renovate updates for libraries, eg to prevent Renovate from upgrading webpack to
+V5:
+
+```json
+{
+  "extends": ["github>crystal-ball/renovate-base:library"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["webpack"],
+      "allowedVersions": "<=4.46"
+    }
+  ]
+}
+```
+
 [renovate-base]: https://github.com/crystal-ball/renovate-base
 
 **Snyk**
