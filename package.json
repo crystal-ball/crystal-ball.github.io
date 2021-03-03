@@ -30,7 +30,7 @@
     "classnames": "2.2.6",
     "core-js": "3.8.3",
     "feather-icons": "4.28.0",
-    "inquirer": "7.3.3",
+    "inquirer": "8.0.0",
     "node-fetch": "2.6.1",
     "prop-types": "15.7.2",
     "react": "17.0.1",
