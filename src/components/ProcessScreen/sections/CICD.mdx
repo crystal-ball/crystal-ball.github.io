@@ -43,13 +43,13 @@ to production with confidence.
   Github actions on pull requests, as well as spotty Gihub actions support, as well as
   Docker complications, it is sometimes required to explicitly set environment variables
   for tools. Easiest solution for this so far is to set environment variables to the _Pull
-  Request_ branch and SHA info. Then in the step, set to fallbacks for runs on master:
+  Request_ branch and SHA info. Then in the step, set to fallbacks for runs on main:
 
   ```yaml
   - name: Code Climate - Report
     if: success()
     run: |
-      # If this is a PR then GIT_BRANCH will be used, otherwise we pull `master` out of GITHUB_REF
+      # If this is a PR then GIT_BRANCH will be used, otherwise we pull `main` out of GITHUB_REF
       export GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF:11}}"
       ./cc-test-reporter after-build --prefix /usr/src/app
     env:
@@ -60,7 +60,7 @@ to production with confidence.
 - [Code Climate environment variables](https://docs.codeclimate.com/docs/github-actions-test-coverage)
 - [Cypress environment variables](https://docs.cypress.io/guides/guides/continuous-integration.html#Git-information)
 - [Percy environment variables](https://docs.percy.io/docs/environment-variables)
-- Structure of a CI/CD workflow to run on every pull request, and every push to master.
+- Structure of a CI/CD workflow to run on every pull request, and every push to main.
 
   ```yaml
   name: CI/CD
@@ -72,11 +72,11 @@ to production with confidence.
       name: Continuous Integration
       if: contains(github.event.head_commit.message, 'skip ci') == false
 
-    # Run deployments/publishing only on push to master and only if the tests passed
+    # Run deployments/publishing only on push to main and only if the tests passed
     publish:
       name: Continuous Deployment
       needs: test
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
   ```
 
 ### [Code Climate](https://codeclimate.com/oss/dashboard)
@@ -218,7 +218,7 @@ Cypress Github app settings:
   }
   ```
 
-- Configure Github actions to run `npx semantic-release` for master builds with successful
+- Configure Github actions to run `npx semantic-release` for main builds with successful
   test runs. Use the `if` to skip publish commits.
 
 **Zeit**
@@ -240,7 +240,7 @@ Cypress Github app settings:
 
 <!-- prettier-ignore-start -->
 [react-prototype]:https://github.com/crystal-ball/react-application-prototype
-[`now.json`]:https://github.com/crystal-ball/react-application-prototype/blob/master/now.json
+[`now.json`]:https://github.com/crystal-ball/react-application-prototype/blob/main/now.json
 [builder-node-version]:https://zeit.co/docs/builders#official-builders/static-builds/static-build-project-node-js-version
 [cypress-installs]:https://docs.cypress.io/guides/getting-started/installing-cypress.html#Skipping-installation
 [route-headers]:https://zeit.co/docs/configuration/#routes/headers
