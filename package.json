@@ -39,12 +39,12 @@
     "svg-symbol-sprite-loader": "5.1.0"
   },
   "devDependencies": {
-    "@crystal-ball/babel-base": "3.0.0",
+    "@crystal-ball/babel-base": "4.0.0",
     "@crystal-ball/commitizen-base": "2.11.0",
     "@crystal-ball/prettier-base": "2.7.0",
     "@crystal-ball/webpack-base": "11.2.0",
     "@types/jest": "26.0.23",
     "eslint-config-eloquence": "19.1.0",
-    "jest": "26.6.3"
+    "jest": "27.0.6"
   }
 }
